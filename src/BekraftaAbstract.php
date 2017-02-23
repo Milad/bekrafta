@@ -8,7 +8,6 @@
 
 namespace Bekrafta;
 
-
 abstract class BekraftaAbstract
 {
     abstract public function validate($personal_no);
@@ -19,7 +18,8 @@ abstract class BekraftaAbstract
      * @param $personal_no
      * @return int
      */
-    protected function luhn_checksum($personal_no) {
+    protected function LuhnChecksum($personal_no)
+    {
         $personal_no = preg_replace('/[^\d]/', '', $personal_no);
         $sum = '';
 
@@ -30,8 +30,9 @@ abstract class BekraftaAbstract
         return array_sum(str_split($sum)) % 10;
     }
 
-    public function is_luhn_valid($personal_no) {
-        return self::luhn_checksum($personal_no) == 0;
+    public function isLuhnValid($personal_no)
+    {
+        return self::LuhnChecksum($personal_no) == 0;
     }
 }
 

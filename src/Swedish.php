@@ -8,7 +8,6 @@
 
 namespace Bekrafta;
 
-
 class Swedish extends BekraftaAbstract
 {
     private $pattern = '#(18|19|20)?[0-9]{6}(\-|\+)?[0-9]{4}#';

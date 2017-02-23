@@ -13,14 +13,14 @@ use Bekrafta\Swedish;
 
 class AbstractTest extends TestCase
 {
-    public function testLuhn_checksum()
+    public function testLuhnChecksum()
     {
         $validator = new Swedish();
-        $this->assertTrue($validator->is_luhn_valid("4111111111111111"));
-        $this->assertFalse($validator->is_luhn_valid("4111111111111110"));
-        $this->assertTrue($validator->is_luhn_valid("1234567812345670"));
-        $this->assertFalse($validator->is_luhn_valid("1234567812345678"));
-        $this->assertFalse($validator->is_luhn_valid("49927398716"));
-        $this->assertFalse($validator->is_luhn_valid("49927398717"));
+        $this->assertTrue($validator->isLuhnValid("4111111111111111"));
+        $this->assertFalse($validator->isLuhnValid("4111111111111110"));
+        $this->assertTrue($validator->isLuhnValid("1234567812345670"));
+        $this->assertFalse($validator->isLuhnValid("1234567812345678"));
+        $this->assertFalse($validator->isLuhnValid("49927398716"));
+        $this->assertFalse($validator->isLuhnValid("49927398717"));
     }
 }
