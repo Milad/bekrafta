@@ -18,7 +18,7 @@ abstract class BekraftaAbstract
      * @param $personal_no
      * @return int
      */
-    protected function LuhnChecksum($personal_no)
+    protected function luhnChecksum($personal_no)
     {
         $personal_no = preg_replace('/[^\d]/', '', $personal_no);
         $sum = '';
@@ -32,7 +32,7 @@ abstract class BekraftaAbstract
 
     public function isLuhnValid($personal_no)
     {
-        return self::LuhnChecksum($personal_no) == 0;
+        return self::luhnChecksum($personal_no) == 0;
     }
 }
 
