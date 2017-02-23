@@ -3,3 +3,14 @@
 
 ### Supported Countries
 - Sweden
+
+### Supported PHP Verions
+- PHP 5.6
+- PHP 7.0
+- PHP 7.1
+- PHP HHVM
+
+### Installation
+```
+composer require milad/bekrafta
+```
