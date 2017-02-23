@@ -12,10 +12,10 @@ class Swedish extends BekraftaAbstract
 {
     private $pattern = '#(18|19|20)?[0-9]{6}(\-|\+)?[0-9]{4}#';
 
-    public function validate($personal_no)
+    public function validate($personalNo)
     {
         // Check the format!
-        preg_match($this->pattern, $personal_no, $matches);
+        preg_match($this->pattern, $personalNo, $matches);
 
         if (!$matches) {
             return false;

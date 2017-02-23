@@ -10,29 +10,29 @@ namespace Bekrafta;
 
 abstract class BekraftaAbstract
 {
-    abstract public function validate($personal_no);
+    abstract public function validate($personalNo);
 
     /**
      * Calculates the Luhn checksum of a personal number.
      * A modified version of this: https://gist.github.com/troelskn/1287893#gistcomment-1482790
-     * @param $personal_no
+     * @param $personalNo
      * @return int
      */
-    protected function luhnChecksum($personal_no)
+    protected function luhnChecksum($personalNo)
     {
-        $personal_no = preg_replace('/[^\d]/', '', $personal_no);
+        $personalNo = preg_replace('/[^\d]/', '', $personalNo);
         $sum = '';
 
-        for ($i = strlen($personal_no) - 1; $i >= 0; -- $i) {
-            $sum .= $i & 1 ? $personal_no[$i] : $personal_no[$i] * 2;
+        for ($i = strlen($personalNo) - 1; $i >= 0; -- $i) {
+            $sum .= $i & 1 ? $personalNo[$i] : $personalNo[$i] * 2;
         }
 
         return array_sum(str_split($sum)) % 10;
     }
 
-    public function isLuhnValid($personal_no)
+    public function isLuhnValid($personalNo)
     {
-        return self::luhnChecksum($personal_no) == 0;
+        return self::luhnChecksum($personalNo) == 0;
     }
 }
 
