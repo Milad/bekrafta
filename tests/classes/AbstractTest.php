@@ -18,5 +18,9 @@ class AbstractTest extends TestCase
         $validator = new Swedish();
         $this->assertTrue($validator->is_luhn_valid("4111111111111111"));
         $this->assertFalse($validator->is_luhn_valid("4111111111111110"));
+        $this->assertTrue($validator->is_luhn_valid("1234567812345670"));
+        $this->assertFalse($validator->is_luhn_valid("1234567812345678"));
+        $this->assertFalse($validator->is_luhn_valid("49927398716"));
+        $this->assertFalse($validator->is_luhn_valid("49927398717"));
     }
 }
