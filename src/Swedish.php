@@ -14,6 +14,10 @@ class Swedish extends BekraftaAbstract
 
     public function validate($personalNo)
     {
+        if (empty($personalNo)) {
+            return false;
+        }
+
         // Check the format!
         preg_match($this->pattern, $personalNo, $matches);
 
@@ -21,10 +25,15 @@ class Swedish extends BekraftaAbstract
             return false;
         }
 
+        # Remove leading 19
+        $personalNo = preg_replace('#^19#', '', $personalNo);
+        # Remove non-numeric characters like - and +
+        $personalNo = preg_replace('#[^0-9]#', '', $personalNo);
+
+        if (!$this->isLuhnValid($personalNo)) {
+            return false;
+        }
+
         return true;
-
-        // var_dump($matches);
-
-        // TODO: Implement validate() method.
     }
 }
