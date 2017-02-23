@@ -1,0 +1,35 @@
+{
+  "name": "milad/bekrafta",
+  "description": "Validate Personal Numbers",
+  "type": "library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Addu Cloud",
+      "email": "info@addu.cloud"
+    },
+    {
+      "name": "Milad Kawas Cale",
+      "email": "miladkaleh@gmail.com"
+    }
+  ],
+  "require": {
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.0 || ^5.7",
+    "squizlabs/PHP_CodeSniffer": "^2.8",
+    "phpmd/phpmd" : "@stable"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bekrafta\\": "src/",
+      "Bekrafta\\Tests\\": "tests/classes/"
+    }
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    }
+  }
+}
