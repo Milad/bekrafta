@@ -12,6 +12,7 @@
 *.yml text
 *.xml text
 *.php text
+*.sh text
 .gitattributes text
 
 # Ensure those won't be messed up with
