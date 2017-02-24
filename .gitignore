@@ -8,3 +8,6 @@
 # Composer
 vendor
 composer.lock
+
+# Coverage report
+tests/coverage.txt

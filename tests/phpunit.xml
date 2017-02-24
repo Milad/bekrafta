@@ -5,4 +5,12 @@
             <directory>./classes</directory>
         </testsuite>
     </testsuites>
+    <logging>
+        <log type="coverage-text" target="./coverage.txt"/>
+    </logging>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../src/</directory>
+        </whitelist>
+    </filter>
 </phpunit>
