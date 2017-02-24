@@ -8,6 +8,8 @@
 *.txt text
 *.c text
 *.h text
+*.md text
+.gitattributes text
 
 # Ensure those won't be messed up with
 *.jpg binary
