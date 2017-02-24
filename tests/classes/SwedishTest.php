@@ -20,7 +20,6 @@ class SwedishTest extends TestCase
          * automatically by http://www.fakenamegenerator.com/gen-random-sw-sw.php
          * As far as we know they don't belong to real persons.
          * */
-
         $validator = new Swedish();
 
         // Variations of 571124-1322
@@ -42,5 +41,16 @@ class SwedishTest extends TestCase
 
         $this->assertFalse($validator->validate('4703042656'));
         $this->assertFalse($validator->validate(''));
+    }
+
+    public function testRemoveLeadingCenturies()
+    {
+        $validator = new Swedish();
+        $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('571124-1322'));
+        $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('19571124-1322'));
+        $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('18571124-1322'));
+        $this->assertEquals('5711241322', $validator->removeLeadingCenturies('5711241322'));
+        $this->assertEquals('5711241322', $validator->removeLeadingCenturies('195711241322'));
+        $this->assertEquals('5711241322', $validator->removeLeadingCenturies('185711241322'));
     }
 }

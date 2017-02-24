@@ -12,6 +12,19 @@ use \Exception;
 
 abstract class BekraftaAbstract
 {
+    /**
+     * Uses all the required test to validate a personal no.
+     * @param $personalNo string
+     * @return bool
+     */
+    abstract public function validate($personalNo);
+
+    /**
+     * Validates the format of a personal no.
+     * Does not checksum the no.
+     * @param $personalNo string
+     * @return bool
+     */
     public function validateFormat($personalNo)
     {
         preg_match($this->pattern, $personalNo, $matches);
@@ -23,13 +36,11 @@ abstract class BekraftaAbstract
         return true;
     }
 
-    abstract public function validate($personalNo);
-
     /**
-     * Calculates the Luhn checksum of a personal number.
+     * Calculates the Luhn checksum of a personal no.
      * Implementation of Luhn algorithm https://en.wikipedia.org/wiki/Luhn_algorithm
      * Source (modified): https://gist.github.com/troelskn/1287893#gistcomment-1482790
-     * @param $personalNo
+     * @param $personalNo string
      * @return int
      * @throws Exception
      */
@@ -39,8 +50,8 @@ abstract class BekraftaAbstract
 
         $personalNo = preg_replace('/[^\d]/', '', $personalNo);
 
-        if (empty($personalNo)) {
-//            throw new Exception("A string that doesn't have any number is invalid.");
+        if (!is_numeric($personalNo) || $personalNo == '') {
+            throw new Exception("A string that doesn't have any number is invalid.");
         }
 
         $sum = '';
@@ -54,7 +65,7 @@ abstract class BekraftaAbstract
 
     /**
      * Checks if a personal no. is valid according to the Luhn algorithm
-     * @param $personalNo
+     * @param $personalNo string
      * @return bool
      */
     public function isLuhnValid($personalNo)
@@ -66,10 +77,5 @@ abstract class BekraftaAbstract
         }
 
         return self::luhnChecksum($personalNo) == 0;
-    }
-
-    public function removeLeadingCentries($personalNo)
-    {
-        return preg_replace('#^(18|19|20)#', '', $personalNo);
     }
 }
