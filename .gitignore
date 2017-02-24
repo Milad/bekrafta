@@ -11,3 +11,4 @@ composer.lock
 
 # Coverage report
 tests/coverage.txt
+tests/coverage/

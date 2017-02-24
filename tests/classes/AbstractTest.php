@@ -9,20 +9,37 @@
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Bekrafta\BekraftaAbstract;
 use Bekrafta\Swedish;
 
 class AbstractTest extends TestCase
 {
+//    public function testValidate()
+//    {
+//        $stub = $this->getMockForAbstractClass('Bekrafta\BekraftaAbstract');
+//        $stub->expects($this->any())
+//            ->method('validate')
+//            ->will($this->returnValue(TRUE));
+//
+//        $this->assertTrue($stub->validate('680731-1003'));
+//        $this->assertTrue($stub->validate('19680731-1003'));
+//        $this->assertTrue($stub->validate('196807311003'));
+//        $this->assertTrue($stub->validate('6807311003'));
+////        $this->assertFalse($stub->validate('680731_1003'));
+//        $this->assertTrue($stub->validate('18680731+1003'));
+//    }
+
     public function testValidateFormat()
     {
         $validator = new Swedish();
 
-        $this->assertTrue($validator->validate('680731-1003'));
-        $this->assertTrue($validator->validate('19680731-1003'));
-        $this->assertTrue($validator->validate('196807311003'));
-        $this->assertTrue($validator->validate('6807311003'));
-        $this->assertFalse($validator->validate('680731_1003'));
-        $this->assertTrue($validator->validate('18680731+1003'));
+        $this->assertTrue($validator->validateFormat('680731-1003'));
+        $this->assertTrue($validator->validateFormat('19680731-1003'));
+        $this->assertTrue($validator->validateFormat('196807311003'));
+        $this->assertTrue($validator->validateFormat('6807311003'));
+        $this->assertFalse($validator->validateFormat('680731_1003'));
+        $this->assertFalse($validator->validateFormat('680731/1003'));
+        $this->assertTrue($validator->validateFormat('18680731+1003'));
     }
 
     public function testLuhnChecksum()
@@ -43,11 +60,17 @@ class AbstractTest extends TestCase
         $this->assertEquals(2, $validator->luhnChecksum("49927398716"));
         $this->assertEquals(3, $validator->luhnChecksum("470304265"));
         $this->assertEquals(6, $validator->luhnChecksum("1234567"));
+
+        $this->expectException('Exception');
+        $validator->luhnChecksum("Milad");
     }
 
     public function testIsLuhnValid()
     {
         $validator = new Swedish();
+
+        $this->assertFalse($validator->isLuhnValid("0"));
+        $this->assertFalse($validator->isLuhnValid(0));
         $this->assertFalse($validator->isLuhnValid("79927398711"));
         $this->assertTrue($validator->isLuhnValid("79927398712"));
     }

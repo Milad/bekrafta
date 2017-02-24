@@ -46,6 +46,7 @@ class SwedishTest extends TestCase
     public function testRemoveLeadingCenturies()
     {
         $validator = new Swedish();
+
         $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('571124-1322'));
         $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('19571124-1322'));
         $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('18571124-1322'));

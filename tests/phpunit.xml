@@ -7,9 +7,10 @@
     </testsuites>
     <logging>
         <log type="coverage-text" target="./coverage.txt"/>
+        <log type="coverage-xml" target="./coverage"/>
     </logging>
     <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
+        <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true" showOnlySummary="false">
             <directory suffix=".php">../src/</directory>
         </whitelist>
     </filter>
