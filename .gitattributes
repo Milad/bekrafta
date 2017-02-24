@@ -9,6 +9,8 @@
 *.c text
 *.h text
 *.md text
+*.yml text
+*.php text
 .gitattributes text
 
 # Ensure those won't be messed up with

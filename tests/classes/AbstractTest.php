@@ -13,6 +13,18 @@ use Bekrafta\Swedish;
 
 class AbstractTest extends TestCase
 {
+    public function testValidateFormat()
+    {
+        $validator = new Swedish();
+
+        $this->assertTrue($validator->validate('680731-1003'));
+        $this->assertTrue($validator->validate('19680731-1003'));
+        $this->assertTrue($validator->validate('196807311003'));
+        $this->assertTrue($validator->validate('6807311003'));
+        $this->assertFalse($validator->validate('680731_1003'));
+        $this->assertTrue($validator->validate('18680731+1003'));
+    }
+
     public function testLuhnChecksum()
     {
         $validator = new Swedish();
@@ -31,5 +43,12 @@ class AbstractTest extends TestCase
         $this->assertEquals(2, $validator->luhnChecksum("49927398716"));
         $this->assertEquals(3, $validator->luhnChecksum("470304265"));
         $this->assertEquals(6, $validator->luhnChecksum("1234567"));
+    }
+
+    public function testIsLuhnValid()
+    {
+        $validator = new Swedish();
+        $this->assertFalse($validator->isLuhnValid("79927398711"));
+        $this->assertTrue($validator->isLuhnValid("79927398712"));
     }
 }

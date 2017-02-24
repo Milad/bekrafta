@@ -11,6 +11,10 @@ install:
   # Install dependencies
   - composer install
 
+before_script:
+  # Check php syntax (Lynt)
+  - if find {src,tests} -name "*.php" ! -path "./vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
+
 script:
   # PHP Mess Detector
   - php vendor/bin/phpmd src,tests text build/phpmd.xml
