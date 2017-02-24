@@ -10,26 +10,24 @@ namespace Bekrafta;
 
 class Swedish extends BekraftaAbstract
 {
-    private $pattern = '#(18|19|20)?[0-9]{6}(\-|\+)?[0-9]{4}#';
+    protected $pattern = '#(18|19|20)?[0-9]{6}(\-|\+)?[0-9]{4}#';
 
     public function validate($personalNo)
     {
+        $personalNo = trim($personalNo);
+
+        // Remove leading 18, 19 or 20
+        $personalNo = $this->removeLeadingCentries($personalNo);
+
         if (empty($personalNo)) {
             return false;
         }
 
-        // Check the format!
-        preg_match($this->pattern, $personalNo, $matches);
-
-        if (!$matches) {
+        if (!$this->validateFormat($personalNo)) {
             return false;
         }
 
-        # Remove leading 19
-        $personalNo = preg_replace('#^19#', '', $personalNo);
-        # Remove non-numeric characters like - and +
-        $personalNo = preg_replace('#[^0-9]#', '', $personalNo);
-
+        // Check if the checksum adds up!
         if (!$this->isLuhnValid($personalNo)) {
             return false;
         }
