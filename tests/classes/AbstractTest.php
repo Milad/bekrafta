@@ -9,7 +9,6 @@
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Bekrafta\BekraftaAbstract;
 use Bekrafta\Swedish;
 
 class AbstractTest extends TestCase
