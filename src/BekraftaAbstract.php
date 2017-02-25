@@ -17,7 +17,7 @@ abstract class BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    abstract public function validate(\string $personalNo);
+    abstract public function validate($personalNo);
 
     /**
      * Validates the format of a personal no.
@@ -25,7 +25,7 @@ abstract class BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    public function validateFormat(\string $personalNo)
+    public function validateFormat($personalNo)
     {
         preg_match($this->pattern, $personalNo, $matches);
 
@@ -44,7 +44,7 @@ abstract class BekraftaAbstract
      * @return int
      * @throws Exception
      */
-    public function luhnChecksum(\string $personalNo)
+    public function luhnChecksum($personalNo)
     {
         $personalNo = trim($personalNo);
 
@@ -68,7 +68,7 @@ abstract class BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    public function isLuhnValid(\string $personalNo)
+    public function isLuhnValid($personalNo)
     {
         $personalNo = trim($personalNo);
 
