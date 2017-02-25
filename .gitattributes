@@ -13,6 +13,8 @@
 *.xml text
 *.php text
 *.sh text
+*.json text
+*.lock text
 .gitattributes text
 
 # Ensure those won't be messed up with
