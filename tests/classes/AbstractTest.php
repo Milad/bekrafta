@@ -14,21 +14,6 @@ use Bekrafta\Swedish;
 
 class AbstractTest extends TestCase
 {
-//    public function testValidate()
-//    {
-//        $stub = $this->getMockForAbstractClass('Bekrafta\BekraftaAbstract');
-//        $stub->expects($this->any())
-//            ->method('validate')
-//            ->will($this->returnValue(TRUE));
-//
-//        $this->assertTrue($stub->validate('680731-1003'));
-//        $this->assertTrue($stub->validate('19680731-1003'));
-//        $this->assertTrue($stub->validate('196807311003'));
-//        $this->assertTrue($stub->validate('6807311003'));
-////        $this->assertFalse($stub->validate('680731_1003'));
-//        $this->assertTrue($stub->validate('18680731+1003'));
-//    }
-
     public function testValidateFormat()
     {
         $validator = new Swedish();
