@@ -12,5 +12,5 @@
 
 ### Installation
 ```
-composer require milad/bekrafta
+composer require miladk/bekrafta
 ```
