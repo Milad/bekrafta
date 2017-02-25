@@ -17,7 +17,7 @@ abstract class BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    abstract public function validate(string $personalNo): bool;
+    abstract public function validate(string $personalNo);
 
     /**
      * Validates the format of a personal no.
@@ -44,7 +44,7 @@ abstract class BekraftaAbstract
      * @return int
      * @throws Exception
      */
-    public function luhnChecksum(string $personalNo): int
+    public function luhnChecksum(string $personalNo)
     {
         $personalNo = trim($personalNo);
 
@@ -68,7 +68,7 @@ abstract class BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    public function isLuhnValid(string $personalNo): bool
+    public function isLuhnValid(string $personalNo)
     {
         $personalNo = trim($personalNo);
 
