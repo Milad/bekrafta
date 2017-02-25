@@ -9,8 +9,7 @@ php:
 
 install:
   # Install dependencies
-  - if php -v | grep 'HipHop'; then composer update; fi
-  - if php -v | grep 'PHP 5.6'; then composer update; fi
+  - if php -v | grep 'HipHop\|PHP 5.6'; then composer update; fi
   - composer install
 
 before_script:
