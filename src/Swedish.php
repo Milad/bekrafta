@@ -17,7 +17,7 @@ class Swedish extends BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    public function validate(string $personalNo)
+    public function validate(\string $personalNo)
     {
         $personalNo = trim($personalNo);
         $personalNo = $this->removeLeadingCenturies($personalNo);
@@ -36,7 +36,7 @@ class Swedish extends BekraftaAbstract
      * @param $personalNo string
      * @return string
      */
-    public function removeLeadingCenturies(string $personalNo)
+    public function removeLeadingCenturies(\string $personalNo)
     {
         if (strlen($personalNo) > 11) {
             return preg_replace('#^(18|19|20)#', '', $personalNo);
