@@ -9,6 +9,7 @@ php:
 
 install:
   # Install dependencies
+  - if php -v | grep 'PHP 5.6'; then composer update; fi
   - composer install
 
 before_script:
