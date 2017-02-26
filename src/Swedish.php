@@ -10,7 +10,11 @@ namespace Bekrafta;
 
 class Swedish extends BekraftaAbstract
 {
-    protected $pattern = '#(18|19|20)?[0-9]{6}(\-|\+)?[0-9]{4}#';
+    /**
+     * @var string Regex pattern to verify the format of the personal no.
+     */
+    protected $pattern = '#(?P<century>18|19|20)?(?P<year>[0-9]{2})(?P<month>[0-9]{2})(?P<day>[0-9]{2})\
+    (?P<separator>\-|\+)?(?P<identifier>[0-9]{3})(?P<checksum>[0-9]{1})#';
 
     /**
      * Uses all the required test to validate a personal no.
@@ -22,8 +26,10 @@ class Swedish extends BekraftaAbstract
         $personalNo = trim($personalNo);
         $personalNo = $this->removeLeadingCenturies($personalNo);
 
+        $luhnAlgorithm = new LuhnAlgorithm();
+
         if (empty($personalNo) || !$this->validateFormat($personalNo)
-            || !$this->isLuhnValid($personalNo)) {
+            || !$luhnAlgorithm->isLuhnValid($personalNo)) {
             return false;
         }
 

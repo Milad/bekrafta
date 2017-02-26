@@ -8,8 +8,6 @@
 
 namespace Bekrafta;
 
-use \Exception;
-
 abstract class BekraftaAbstract
 {
     /**
@@ -34,48 +32,5 @@ abstract class BekraftaAbstract
         }
 
         return true;
-    }
-
-    /**
-     * Calculates the Luhn checksum of a personal no.
-     * Implementation of Luhn algorithm https://en.wikipedia.org/wiki/Luhn_algorithm
-     * Source (modified): https://gist.github.com/troelskn/1287893#gistcomment-1482790
-     * @param $personalNo string
-     * @return int
-     * @throws Exception
-     */
-    public function luhnChecksum($personalNo)
-    {
-        $personalNo = trim($personalNo);
-
-        $personalNo = preg_replace('/[^\d]/', '', $personalNo);
-
-        if (!is_numeric($personalNo) || $personalNo == '') {
-            throw new Exception("A string that doesn't have any number is invalid.");
-        }
-
-        $sum = '';
-
-        for ($i = strlen($personalNo) - 1; $i >= 0; --$i) {
-            $sum .= $i & 1 ? $personalNo[$i] : $personalNo[$i] * 2;
-        }
-
-        return array_sum(str_split($sum)) % 10;
-    }
-
-    /**
-     * Checks if a personal no. is valid according to the Luhn algorithm
-     * @param $personalNo string
-     * @return bool
-     */
-    public function isLuhnValid($personalNo)
-    {
-        $personalNo = trim($personalNo);
-
-        if (empty($personalNo)) {
-            return false;
-        }
-
-        return self::luhnChecksum($personalNo) == 0;
     }
 }

@@ -39,6 +39,10 @@ class SwedishTest extends TestCase
         $this->assertTrue($validator->validate('671017-1239'));
         $this->assertTrue($validator->validate('680731-1003'));
 
+        https://en.wikipedia.org/wiki/Personal_identity_number_(Sweden)#Examples
+        $this->assertTrue($validator->validate('670919-9530'));
+        $this->assertTrue($validator->validate('811228-9874'));
+
         $this->assertFalse($validator->validate('4703042656'));
         $this->assertFalse($validator->validate(''));
     }

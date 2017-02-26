@@ -2,7 +2,7 @@
   "name": "miladk/bekrafta",
   "description": "Validate Personal Numbers",
   "type": "library",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "authors": [
     {
