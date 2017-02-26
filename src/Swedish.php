@@ -13,8 +13,13 @@ class Swedish extends BekraftaAbstract
     /**
      * @var string Regex pattern to verify the format of the personal no.
      */
-    protected $pattern = '#(?P<century>18|19|20)?(?P<year>[0-9]{2})(?P<month>[0-9]{2})(?P<day>[0-9]{2})\
-    (?P<separator>\-|\+)?(?P<identifier>[0-9]{3})(?P<checksum>[0-9]{1})#';
+    protected $pattern;
+
+    public function __construct()
+    {
+        $this->pattern = '#(?P<century>18|19|20)?(?P<year>[0-9]{2})(?P<month>[0-9]{2})(?P<day>[0-9]{2})';
+        $this->pattern .= '(?P<separator>\-|\+)?(?P<identifier>[0-9]{3})(?P<checksum>[0-9]{1})#';
+    }
 
     /**
      * Uses all the required test to validate a personal no.
