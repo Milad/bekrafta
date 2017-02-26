@@ -8,7 +8,7 @@
 
 namespace Bekrafta;
 
-class Swedish extends BekraftaAbstract
+class Sweden extends BekraftaAbstract
 {
     /**
      * @var string Regex pattern to verify the format of the personal no.

@@ -9,7 +9,7 @@
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Bekrafta\Swedish;
+use Bekrafta\Sweden;
 
 class SwedishTest extends TestCase
 {
@@ -20,7 +20,7 @@ class SwedishTest extends TestCase
          * automatically by http://www.fakenamegenerator.com/gen-random-sw-sw.php
          * As far as we know they don't belong to real persons.
          * */
-        $validator = new Swedish();
+        $validator = new Sweden();
 
         // Variations of 571124-1322
         $this->assertTrue($validator->validate('571124-1322'));
@@ -49,7 +49,7 @@ class SwedishTest extends TestCase
 
     public function testRemoveLeadingCenturies()
     {
-        $validator = new Swedish();
+        $validator = new Sweden();
 
         $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('571124-1322'));
         $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('19571124-1322'));

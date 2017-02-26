@@ -8,9 +8,9 @@
 
 require('vendor/autoload.php');
 
-use Bekrafta\Swedish;
+use Bekrafta\Sweden;
 
-$test = new Swedish();
+$test = new Sweden();
 
 $test->validateFormat('198302282556');
 //$test->isLuhnValid('79927398713');

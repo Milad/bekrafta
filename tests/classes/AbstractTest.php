@@ -9,13 +9,13 @@
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Bekrafta\Swedish;
+use Bekrafta\Sweden;
 
 class AbstractTest extends TestCase
 {
     public function testValidateFormat()
     {
-        $validator = new Swedish();
+        $validator = new Sweden();
 
         $this->assertTrue($validator->validateFormat('680731-1003'));
         $this->assertTrue($validator->validateFormat('19680731-1003'));
