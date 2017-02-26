@@ -11,7 +11,7 @@ namespace Bekrafta\Tests;
 use PHPUnit\Framework\TestCase;
 use Bekrafta\Sweden;
 
-class SwedishTest extends TestCase
+class SwedenTest extends TestCase
 {
     public function testValidate()
     {

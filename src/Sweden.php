@@ -13,12 +13,19 @@ class Sweden extends BekraftaAbstract
     /**
      * @var string Regex pattern to verify the format of the personal no.
      */
-    protected $pattern;
+    protected $format;
 
     public function __construct()
     {
-        $this->pattern = '#(?P<century>18|19|20)?(?P<year>[0-9]{2})(?P<month>[0-9]{2})(?P<day>[0-9]{2})';
-        $this->pattern .= '(?P<separator>\-|\+)?(?P<identifier>[0-9]{3})(?P<checksum>[0-9]{1})#';
+        $this->format = '#';
+        $this->format .= '(?P<century>18|19|20)?';
+        $this->format .= '(?P<year>[0-9]{2})';
+        $this->format .= '(?P<month>[0-9]{2})';
+        $this->format .= '(?P<day>[0-9]{2})';
+        $this->format .= '(?P<separator>\-|\+)?';
+        $this->format .= '(?P<identifier>[0-9]{3})';
+        $this->format .= '(?P<checksum>[0-9]{1})';
+        $this->format .= '#';
     }
 
     /**

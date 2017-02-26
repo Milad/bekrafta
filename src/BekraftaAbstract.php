@@ -25,7 +25,7 @@ abstract class BekraftaAbstract
      */
     public function validateFormat($personalNo)
     {
-        preg_match($this->pattern, $personalNo, $matches);
+        preg_match($this->format, $personalNo, $matches);
 
         if (!$matches) {
             return false;

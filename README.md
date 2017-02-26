@@ -2,6 +2,7 @@
 [Bekräfta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): Validate Personal Numbers
 
 ### Supported Countries
+- Finland
 - Sweden
 
 ### Supported PHP Verions
