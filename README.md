@@ -5,7 +5,7 @@
 - Finland
 - Sweden
 
-### Supported PHP Verions
+### Supported PHP Versions
 - PHP 5.6
 - PHP 7.0
 - PHP 7.1
