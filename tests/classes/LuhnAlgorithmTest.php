@@ -1,20 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 26-Feb-17
- * Time: 19:27
- */
 
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Bekrafta\LuhnAlgorithm;
 
-class LuhnAlgorithmTest extends TestCase
-{
-    public function testluhnChecksum()
-    {
+class LuhnAlgorithmTest extends TestCase {
+    public function testLuhnChecksum() {
         $luhnAlgorithm = new LuhnAlgorithm();
 
         // https://en.wikipedia.org/wiki/Luhn_algorithm#Description
@@ -44,8 +36,7 @@ class LuhnAlgorithmTest extends TestCase
         $this->assertEquals(1, $luhnAlgorithm->luhnChecksum("1234567"));
     }
 
-    public function testIsLuhnValid()
-    {
+    public function testIsLuhnValid() {
         $luhnAlgorithm = new LuhnAlgorithm();
 
         // https://en.wikipedia.org/wiki/Luhn_algorithm#Description
@@ -80,8 +71,7 @@ class LuhnAlgorithmTest extends TestCase
         $this->assertTrue($luhnAlgorithm->isLuhnValid("6331101999990016"));
     }
 
-    public function testCalculateLuhn()
-    {
+    public function testCalculateLuhn() {
         $luhnAlgorithm = new LuhnAlgorithm();
 
         $this->assertEquals(0, $luhnAlgorithm->calculateLuhn("0"));

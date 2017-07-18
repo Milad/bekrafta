@@ -1,22 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 26-Feb-17
- * Time: 21:12
- */
 
 namespace Bekrafta;
 
-class Finland extends BekraftaAbstract
-{
+class Finland extends BekraftaAbstract {
     /**
      * @var string Regex pattern to verify the format of the personal no.
      */
     protected $format;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->format = '#';
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
@@ -32,8 +24,7 @@ class Finland extends BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    public function validate($personalNo)
-    {
+    public function validate(string $personalNo): bool {
         $personalNo = trim($personalNo);
 
         if (empty($personalNo) || !$this->validateFormat($personalNo)
@@ -44,8 +35,7 @@ class Finland extends BekraftaAbstract
         return true;
     }
 
-    public function isValidChecksum($personalNo)
-    {
+    public function isValidChecksum(string $personalNo): bool {
         $controlCharacter = "0123456789ABCDEFHJKLMNPRSTUVWXY";
 
         if (preg_match($this->format, $personalNo, $matches)) {
@@ -60,5 +50,9 @@ class Finland extends BekraftaAbstract
         }
 
         return false;
+    }
+
+    public function getCensored(string $personalNo): string {
+        return $personalNo;
     }
 }

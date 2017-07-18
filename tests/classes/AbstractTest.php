@@ -1,20 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 23-Feb-17
- * Time: 22:27
- */
 
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Bekrafta\Sweden;
 
-class AbstractTest extends TestCase
-{
-    public function testValidateFormat()
-    {
+class AbstractTest extends TestCase {
+    public function testValidateFormat() {
         $validator = new Sweden();
 
         $this->assertTrue($validator->validateFormat('680731-1003'));

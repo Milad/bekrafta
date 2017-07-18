@@ -1,21 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 23-Feb-17
- * Time: 21:13
- */
 
 namespace Bekrafta;
 
-abstract class BekraftaAbstract
-{
+abstract class BekraftaAbstract {
     /**
      * Uses all the required test to validate a personal no.
      * @param $personalNo string
      * @return bool
      */
-    abstract public function validate($personalNo);
+    abstract public function validate(string $personalNo): bool;
 
     /**
      * Validates the format of a personal no.
@@ -23,8 +16,7 @@ abstract class BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    public function validateFormat($personalNo)
-    {
+    public function validateFormat(string $personalNo): bool {
         preg_match($this->format, $personalNo, $matches);
 
         if (!$matches) {
@@ -33,4 +25,6 @@ abstract class BekraftaAbstract
 
         return true;
     }
+
+    abstract public function getCensored(string $personalNo): string;
 }

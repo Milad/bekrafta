@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 26-Feb-17
- * Time: 13:29
- */
 
 namespace Bekrafta;
 
@@ -13,26 +7,25 @@ namespace Bekrafta;
  * Implementation of Luhn Algorithm https://en.wikipedia.org/wiki/Luhn_algorithm
  * @package Bekrafta
  */
-class LuhnAlgorithm
-{
+class LuhnAlgorithm {
     /**
      * Cleans the number and removes any spaces surrounding it.
-     * @param $number string
+     *
+     * @param string $number
      * @return string
      */
-    private function clean($number)
-    {
+    private function clean(string $number): string {
         $number = preg_replace('#[^\d]#', '', $number);
         return trim($number);
     }
 
     /**
      * Calculates the Luhn checksum of a personal no.
+     *
      * @param string $number
      * @return int The modulo 10 of the number
      */
-    public function luhnChecksum($number)
-    {
+    public function luhnChecksum(string $number): int {
         $number = $this->clean($number);
 
         // Reverse the string
@@ -62,11 +55,11 @@ class LuhnAlgorithm
 
     /**
      * Checks if the number is valid according to Luhn Algorithm
-     * @param $number string
+     *
+     * @param string $number
      * @return bool
      */
-    public function isLuhnValid($number)
-    {
+    public function isLuhnValid(string $number): bool {
         $number = $this->clean($number);
 
         // If the total modulo 10 is equal to 0
@@ -76,11 +69,11 @@ class LuhnAlgorithm
 
     /**
      * Calculates the appropriate checksum number.
-     * @param $partialNumber string
+     *
+     * @param string $partialNumber
      * @return int
      */
-    public function calculateLuhn($partialNumber)
-    {
+    public function calculateLuhn(string $partialNumber): int {
         $checkDigit = $this->luhnChecksum(intval($partialNumber) * 10);
         return $checkDigit == 0 ? $checkDigit : 10 - $checkDigit;
     }

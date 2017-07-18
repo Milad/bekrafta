@@ -1,20 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 23-Feb-17
- * Time: 22:10
- */
 
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Bekrafta\Sweden;
 
-class SwedenTest extends TestCase
-{
-    public function testValidate()
-    {
+class SwedenTest extends TestCase {
+    public function testValidate() {
         /*
          * Disclaimer: The personal numbers here have been generated
          * automatically by http://www.fakenamegenerator.com/gen-random-sw-sw.php
@@ -47,8 +39,7 @@ class SwedenTest extends TestCase
         $this->assertFalse($validator->validate(''));
     }
 
-    public function testRemoveLeadingCenturies()
-    {
+    public function testRemoveLeadingCenturies() {
         $validator = new Sweden();
 
         $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('571124-1322'));

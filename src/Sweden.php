@@ -1,22 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 23-Feb-17
- * Time: 21:18
- */
 
 namespace Bekrafta;
 
-class Sweden extends BekraftaAbstract
-{
+class Sweden extends BekraftaAbstract {
     /**
      * @var string Regex pattern to verify the format of the personal no.
      */
     protected $format;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->format = '#';
         $this->format .= '(?P<century>18|19|20)?';
         $this->format .= '(?P<year>[0-9]{2})';
@@ -33,8 +25,7 @@ class Sweden extends BekraftaAbstract
      * @param $personalNo string
      * @return bool
      */
-    public function validate($personalNo)
-    {
+    public function validate(string $personalNo): bool {
         $personalNo = trim($personalNo);
         $personalNo = $this->removeLeadingCenturies($personalNo);
 
@@ -54,12 +45,15 @@ class Sweden extends BekraftaAbstract
      * @param $personalNo string
      * @return string
      */
-    public function removeLeadingCenturies($personalNo)
-    {
+    public function removeLeadingCenturies(string $personalNo): string {
         if (strlen($personalNo) > 11) {
             return preg_replace('#^(18|19|20)#', '', $personalNo);
         }
 
+        return $personalNo;
+    }
+
+    public function getCensored(string $personalNo): string {
         return $personalNo;
     }
 }

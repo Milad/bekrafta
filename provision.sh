@@ -2,7 +2,7 @@
 
 apt-get update
 echo "Installing curl / wget / nano / php"
-apt-get install -y -qq curl wget nano php php-cli php-xdebug
+apt-get install -y -qq curl wget nano php php-cli php-xdebug php-xml
 
 # Install composer
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-use-composer-on-ubuntu-16-04

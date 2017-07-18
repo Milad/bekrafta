@@ -1,20 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Milad
- * Date: 26-Feb-17
- * Time: 21:11
- */
 
 namespace Bekrafta\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Bekrafta\Finland;
 
-class FinlandTest extends TestCase
-{
-    public function testValidate()
-    {
+class FinlandTest extends TestCase {
+    public function testValidate() {
         $validator = new Finland();
 
         // https://en.wikipedia.org/wiki/National_identification_number#Finland

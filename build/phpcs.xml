@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <ruleset name="Bekrafta CodeStyle">
-    <description>The coding standard for this app.</description>
-    <rule ref="PSR2"/>
+    <description>The coding standard for this package.</description>
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+    </rule>
+    <rule ref="Generic.Classes.OpeningBraceSameLine"/>
+    <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+    <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
 </ruleset>
