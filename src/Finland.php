@@ -13,9 +13,9 @@ class Finland extends BekraftaAbstract {
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
         $this->format .= '(?P<year>[0-9]{2})';
-        $this->format .= '(?P<centurySign>\+|\-|A)?';
+        $this->format .= '(?P<centurySign>[\-+A])?';
         $this->format .= '(?P<individualNumber>[0-9]{3})';
-        $this->format .= '(?P<checksum>[0-9A-Y]{1})';
+        $this->format .= '(?P<checksum>[0-9A-Y])';
         $this->format .= '#i';
     }
 
@@ -38,21 +38,43 @@ class Finland extends BekraftaAbstract {
     public function isValidChecksum(string $personalNo): bool {
         $controlCharacter = "0123456789ABCDEFHJKLMNPRSTUVWXY";
 
-        if (preg_match($this->format, $personalNo, $matches)) {
-            $num = $matches['day'] . $matches['month'] . $matches['year'] . $matches['individualNumber'];
-            $num = intval($num);
+        $match = $this->getElements($personalNo);
 
-            $remainder = $num % 31;
+        $num = $match['day'] . $match['month'] . $match['year'] . $match['individualNumber'];
+        $num = intval($num);
 
-            if ($controlCharacter[$remainder] == strtoupper($matches['checksum'])) {
-                return true;
-            }
+        $remainder = $num % 31;
+
+        if ($controlCharacter[$remainder] == strtoupper($match['checksum'])) {
+            return true;
         }
 
         return false;
     }
 
     public function getCensored(string $personalNo): string {
-        return $personalNo;
+        $match = $this->getElements($personalNo);
+
+        return $match['day'] . $match['month'] . $match['year'] . $match['centurySign'] . '****';
+    }
+
+    public function getAge(string $personalNo, string $today = 'today'): int {
+        $match = $this->getElements($personalNo);
+
+        $birthday = $match['year'] . '-' . $match['month'] . '-' . $match['day'];
+
+        switch ($match['centurySign']) {
+            case '-':
+                $birthday = '19' . $birthday;
+                break;
+            case '+':
+                $birthday = '18' . $birthday;
+                break;
+            case 'A':
+                $birthday = '20' . $birthday;
+                break;
+        }
+
+        return $this->calculateAge($birthday, $today);
     }
 }

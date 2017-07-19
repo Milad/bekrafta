@@ -2,6 +2,8 @@
 
 namespace Bekrafta;
 
+use DateTime;
+
 class Sweden extends BekraftaAbstract {
     /**
      * @var string Regex pattern to verify the format of the personal no.
@@ -9,15 +11,14 @@ class Sweden extends BekraftaAbstract {
     protected $format;
 
     public function __construct() {
-        $this->format = '#';
-        $this->format .= '(?P<century>18|19|20)?';
+        $this->format = '#^';
         $this->format .= '(?P<year>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
         $this->format .= '(?P<day>[0-9]{2})';
-        $this->format .= '(?P<separator>\-|\+)?';
+        $this->format .= '(?P<separator>[\-+])';
         $this->format .= '(?P<identifier>[0-9]{3})';
-        $this->format .= '(?P<checksum>[0-9]{1})';
-        $this->format .= '#';
+        $this->format .= '(?P<checksum>[0-9])';
+        $this->format .= '$#';
     }
 
     /**
@@ -27,7 +28,6 @@ class Sweden extends BekraftaAbstract {
      */
     public function validate(string $personalNo): bool {
         $personalNo = trim($personalNo);
-        $personalNo = $this->removeLeadingCenturies($personalNo);
 
         $luhnAlgorithm = new LuhnAlgorithm();
 
@@ -39,21 +39,27 @@ class Sweden extends BekraftaAbstract {
         return true;
     }
 
-    /**
-     * Removes the leading century digits because they are not
-     * used to calculate the checksum
-     * @param $personalNo string
-     * @return string
-     */
-    public function removeLeadingCenturies(string $personalNo): string {
-        if (strlen($personalNo) > 11) {
-            return preg_replace('#^(18|19|20)#', '', $personalNo);
-        }
+    public function getCensored(string $personalNo): string {
+        $match = $this->getElements($personalNo);
 
-        return $personalNo;
+        return $match['year'] . $match['month'] . $match['day'] . $match['separator'] . '****';
     }
 
-    public function getCensored(string $personalNo): string {
-        return $personalNo;
+    public function getAge(string $personalNo, string $today = 'today'): int {
+        $match = $this->getElements($personalNo);
+
+        $birthday = $match['year'] . '-' . $match['month'] . '-' . $match['day'];
+
+        $todayObj = new DateTime($today);
+
+        if ($todayObj < new DateTime('20' . $birthday)) {
+            $prefix = '19';
+        } elseif ($todayObj >= new DateTime('20' . $birthday) && $match['separator'] === '-') {
+            $prefix = '20';
+        } elseif ($todayObj >= new DateTime('19' . $birthday) && $match['separator'] === '+') {
+            $prefix = '19';
+        }
+
+        return $this->calculateAge($prefix . $birthday, $today);
     }
 }

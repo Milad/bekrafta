@@ -6,12 +6,12 @@
 - Sweden
 
 ### Supported PHP Versions
-- PHP 5.6
 - PHP 7.0
 - PHP 7.1
-- PHP HHVM
 
 ### Installation
 ```
 composer require miladk/bekrafta
 ```
+
+### Usage

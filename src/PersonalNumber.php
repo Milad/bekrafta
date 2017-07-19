@@ -6,8 +6,8 @@ use Exception;
 use ReflectionClass;
 
 class PersonalNumber {
-    private $personalNo;
-    private $bekrafta;
+    protected $personalNo;
+    protected $bekrafta;
 
     public function __construct(string $personalNo) {
         $this->personalNo = $personalNo;
@@ -27,15 +27,31 @@ class PersonalNumber {
         return false;
     }
 
-    public function getCensored() {
+    public function getCensored(): string {
         if ($this->bekrafta === null) {
-            throw new Exception("No format was detected. Have you forgot to call detect()?");
+            $this->detect();
+        }
+
+        if ($this->bekrafta === null) {
+            throw new Exception("No format was detected.");
         }
 
         return $this->bekrafta->getCensored($this->personalNo);
     }
 
-    private function getList(): array {
+    public function getAge(string $today = 'today'): int {
+        if ($this->bekrafta === null) {
+            $this->detect();
+        }
+
+        if ($this->bekrafta === null) {
+            throw new Exception("No format was detected.");
+        }
+
+        return $this->bekrafta->getAge($this->personalNo, $today);
+    }
+
+    protected function getList(): array {
         $classes = [];
 
         $scan = scandir(__DIR__ . '/../src');

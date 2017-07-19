@@ -14,16 +14,8 @@ class SwedenTest extends TestCase {
          * */
         $validator = new Sweden();
 
-        // Variations of 571124-1322
         $this->assertTrue($validator->validate('571124-1322'));
-        $this->assertTrue($validator->validate('19571124-1322'));
-        $this->assertTrue($validator->validate('195711241322'));
-
-        // Variations of 470304-2657
         $this->assertTrue($validator->validate('470304-2657'));
-        $this->assertTrue($validator->validate('19470304-2657'));
-        $this->assertTrue($validator->validate('194703042657'));
-        $this->assertTrue($validator->validate('4703042657'));
 
         // Various personal numbers
         $this->assertTrue($validator->validate('650428-0196'));
@@ -35,18 +27,23 @@ class SwedenTest extends TestCase {
         $this->assertTrue($validator->validate('670919-9530'));
         $this->assertTrue($validator->validate('811228-9874'));
 
-        $this->assertFalse($validator->validate('4703042656'));
+        $this->assertTrue($validator->validate('111228+7568'));
+        $this->assertTrue($validator->validate('160718-7562'));
+
         $this->assertFalse($validator->validate(''));
     }
 
-    public function testRemoveLeadingCenturies() {
+    public function testGetAge() {
+        $today = '2017-07-19';
+
         $validator = new Sweden();
 
-        $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('571124-1322'));
-        $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('19571124-1322'));
-        $this->assertEquals('571124-1322', $validator->removeLeadingCenturies('18571124-1322'));
-        $this->assertEquals('5711241322', $validator->removeLeadingCenturies('5711241322'));
-        $this->assertEquals('5711241322', $validator->removeLeadingCenturies('195711241322'));
-        $this->assertEquals('5711241322', $validator->removeLeadingCenturies('185711241322'));
+        $this->assertEquals(52, $validator->getAge('650428-0196', $today));
+        $this->assertEquals(70, $validator->getAge('470304-2657', $today));
+        $this->assertEquals(35, $validator->getAge('811228-9874', $today));
+        $this->assertEquals(105, $validator->getAge('111228+7568', $today));
+        $this->assertEquals(5, $validator->getAge('111228-7568', $today));
+        $this->assertEquals(1, $validator->getAge('160718-7562', $today));
+        $this->assertEquals(101, $validator->getAge('160718+7562', $today));
     }
 }

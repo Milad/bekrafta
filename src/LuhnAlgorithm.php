@@ -14,7 +14,7 @@ class LuhnAlgorithm {
      * @param string $number
      * @return string
      */
-    private function clean(string $number): string {
+    protected function clean(string $number): string {
         $number = preg_replace('#[^\d]#', '', $number);
         return trim($number);
     }
