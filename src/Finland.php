@@ -35,7 +35,7 @@ class Finland extends BekraftaAbstract {
         return true;
     }
 
-    public function isValidChecksum(string $personalNo): bool {
+    protected function isValidChecksum(string $personalNo): bool {
         $controlCharacter = "0123456789ABCDEFHJKLMNPRSTUVWXY";
 
         $match = $this->getElements($personalNo);

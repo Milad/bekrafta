@@ -19,14 +19,21 @@ class PersonalNumberTest extends TestCase {
 
         $this->assertFalse((new PersonalNumber('877898-8797'))->detect());
         $this->assertFalse((new PersonalNumber('545685-8723'))->detect());
+
+        $this->assertTrue((new PersonalNumber('22071799674'))->detect());
+        $this->assertTrue((new PersonalNumber('22071799402'))->detect());
+        $this->assertFalse((new PersonalNumber('22071799404'))->detect());
     }
 
     public function testGetCensored() {
         $obj = new PersonalNumber('571124-1322');
-        $this->assertEquals('571124-****', $obj->getCensored('571124-1322'));
+        $this->assertEquals('571124-****', $obj->getCensored());
 
         $obj = new PersonalNumber('270846-627Y');
-        $this->assertEquals('270846-****', $obj->getCensored('270846-627Y'));
+        $this->assertEquals('270846-****', $obj->getCensored());
+
+        $obj = new PersonalNumber('22071799674');
+        $this->assertEquals('220717*****', $obj->getCensored());
 
         $obj = new PersonalNumber('877898-8797');
         $this->expectException(Exception::class);
