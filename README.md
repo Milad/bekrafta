@@ -56,3 +56,6 @@ $oSweden->getAge('811228-9874');
  // m
 $oSweden->getGender('811228-9874');
 ```
+
+### License
+MIT
