@@ -9,6 +9,7 @@
 ### Supported PHP Versions
 - PHP 7.0
 - PHP 7.1
+- PHP 7.2
 
 ### Installation
 ```
