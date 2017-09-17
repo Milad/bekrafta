@@ -58,5 +58,10 @@ $oSweden->getAge('811228-9874');
 $oSweden->getGender('811228-9874');
 ```
 
+# Sweden Extended
+In Sweden, some companies add the century digits as a part of the personal number, or remove the symbol between the date of birth and the four other digits. These changes are not part of the standard of the official standard. So I included to classes for Sweden:
+- Sweden: Supports the official standard format.
+- SwedenExtended: Supports the popular non-standard formats.
+
 ### License
 MIT
