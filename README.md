@@ -1,5 +1,5 @@
-# Bekr‰fta [![Build Status](https://travis-ci.org/Milad/bekrafta.svg?branch=master)](https://travis-ci.org/Milad/bekrafta)
-[Bekr‰fta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): A PHP Library to Validate Personal Numbers
+# Bekr√§fta [![Build Status](https://travis-ci.org/Milad/bekrafta.svg?branch=master)](https://travis-ci.org/Milad/bekrafta)
+[Bekr√§fta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): A PHP library to perform common operations on personal numbers, like: Validation, censoring the individual digits, calculating age and detecting gender.
 
 ### Supported Countries
 - Finland
