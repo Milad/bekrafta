@@ -54,4 +54,34 @@ class PersonalNumberTest extends TestCase {
         $this->expectException(Exception::class);
         $obj->getAge($today);
     }
+
+    public function testGetGender() {
+        $obj = new PersonalNumber('240696-797T');
+        $this->assertEquals('m', $obj->getGender());
+
+        $obj = new PersonalNumber('200278-704B');
+        $this->assertEquals('f', $obj->getGender());
+
+        $obj = new PersonalNumber('21034535105');
+        $this->assertEquals('m', $obj->getGender());
+
+        $obj = new PersonalNumber('07076627678');
+        $this->assertEquals('f', $obj->getGender());
+
+        $obj = new PersonalNumber('671017-1239');
+        $this->assertEquals('m', $obj->getGender());
+
+        $obj = new PersonalNumber('111228+7568');
+        $this->assertEquals('f', $obj->getGender());
+
+        $obj = new PersonalNumber('19671017-1239');
+        $this->assertEquals('m', $obj->getGender());
+
+        $obj = new PersonalNumber('19111228+7568');
+        $this->assertEquals('f', $obj->getGender());
+
+        $obj = new PersonalNumber('877898-8797');
+        $this->expectException(Exception::class);
+        $obj->getGender();
+    }
 }

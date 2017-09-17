@@ -6,7 +6,14 @@ use Exception;
 use ReflectionClass;
 
 class PersonalNumber {
+    /**
+     * @var string
+     */
     protected $personalNo;
+
+    /**
+     * @var BekraftaAbstract
+     */
     protected $bekrafta;
 
     public function __construct(string $personalNo) {
@@ -49,6 +56,18 @@ class PersonalNumber {
         }
 
         return $this->bekrafta->getAge($this->personalNo, $today);
+    }
+
+    public function getGender(): string {
+        if ($this->bekrafta === null) {
+            $this->detect();
+        }
+
+        if ($this->bekrafta === null) {
+            throw new Exception("No format was detected.");
+        }
+
+        return $this->bekrafta->getGender($this->personalNo);
     }
 
     protected function getList(): array {

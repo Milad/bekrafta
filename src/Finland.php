@@ -3,11 +3,6 @@
 namespace Bekrafta;
 
 class Finland extends BekraftaAbstract {
-    /**
-     * @var string Regex pattern to verify the format of the personal no.
-     */
-    protected $format;
-
     public function __construct() {
         $this->format = '#';
         $this->format .= '(?P<day>[0-9]{2})';
@@ -35,6 +30,12 @@ class Finland extends BekraftaAbstract {
         return true;
     }
 
+    /**
+     * Validates the checksum of the personal number.
+     *
+     * @param string $personalNo
+     * @return bool
+     */
     protected function isValidChecksum(string $personalNo): bool {
         $controlCharacter = "0123456789ABCDEFHJKLMNPRSTUVWXY";
 
@@ -52,12 +53,25 @@ class Finland extends BekraftaAbstract {
         return false;
     }
 
+    /**
+     * Returns a censored version of the personal number.
+     *
+     * @param string $personalNo
+     * @return string
+     */
     public function getCensored(string $personalNo): string {
         $match = $this->getElements($personalNo);
 
         return $match['day'] . $match['month'] . $match['year'] . $match['centurySign'] . '****';
     }
 
+    /**
+     * Gets the age of the person using the personal number.
+     *
+     * @param string $personalNo
+     * @param string $today
+     * @return int
+     */
     public function getAge(string $personalNo, string $today = 'today'): int {
         $match = $this->getElements($personalNo);
 
@@ -76,5 +90,22 @@ class Finland extends BekraftaAbstract {
         }
 
         return $this->calculateAge($birthday, $today);
+    }
+
+    /**
+     * Returns the gender from the personal number.
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getGender(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+        $identifier = intval($match['individualNumber']);
+
+        if (($identifier % 2) == 0) {
+            return 'f';
+        }
+
+        return 'm';
     }
 }

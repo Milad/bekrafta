@@ -10,6 +10,8 @@ namespace Bekrafta;
 
 class SwedenExtended extends Sweden {
     public function __construct() {
+        parent::__construct();
+
         $this->format = '#';
         $this->format .= '(?P<century>18|19|20)?';
         $this->format .= '(?P<year>[0-9]{2})';
@@ -21,12 +23,36 @@ class SwedenExtended extends Sweden {
         $this->format .= '#';
     }
 
+    /**
+     * Uses all the required test to validate a personal no.
+     * @param $personalNo string
+     * @return bool
+     */
     public function validate(string $personalNo): bool {
         $personalNo = $this->removeLeadingCenturies($personalNo);
 
         return parent::validate($personalNo);
     }
 
+    /**
+     * Returns a censored version of the personal number.
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getCensored(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+
+        return $match['century'] . $match['year'] . $match['month'] . $match['day'] . $match['separator'] . '****';
+    }
+
+    /**
+     * Gets the age of the person using the personal number.
+     *
+     * @param string $personalNo
+     * @param string $today
+     * @return int
+     */
     public function getAge(string $personalNo, string $today = 'today'): int {
         $match = $this->getElements($personalNo);
 

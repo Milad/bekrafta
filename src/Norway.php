@@ -3,11 +3,6 @@
 namespace Bekrafta;
 
 class Norway extends BekraftaAbstract {
-    /**
-     * @var string Regex pattern to verify the format of the personal no.
-     */
-    protected $format;
-
     public function __construct() {
         $this->format = '#';
         $this->format .= '(?P<day>[0-9]{2})';
@@ -19,6 +14,11 @@ class Norway extends BekraftaAbstract {
         $this->format .= '#';
     }
 
+    /**
+     * Uses all the required test to validate a personal no.
+     * @param $personalNo string
+     * @return bool
+     */
     public function validate(string $personalNo): bool {
         $personalNo = trim($personalNo);
 
@@ -30,6 +30,11 @@ class Norway extends BekraftaAbstract {
         return true;
     }
 
+    /**
+     * Are both checksums valid?
+     * @param string $personalNo
+     * @return bool
+     */
     protected function isValidChecksum(string $personalNo): bool {
         $group1 = [3, 7, 6, 1, 8, 9, 4, 5, 2, 1];
         $group2 = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1];
@@ -42,6 +47,13 @@ class Norway extends BekraftaAbstract {
         return true;
     }
 
+    /**
+     * Validets a checksum in the personal number.
+     *
+     * @param string $personalNo
+     * @param array $numbers
+     * @return bool
+     */
     protected function validateCheckSum(string $personalNo, array $numbers) {
         $sum = 0;
 
@@ -52,27 +64,64 @@ class Norway extends BekraftaAbstract {
         return $sum % 11 === 0;
     }
 
+    /**
+     * Gets the age of the person using the personal number.
+     *
+     * @param string $personalNo
+     * @param string $today
+     * @return int
+     */
     public function getAge(string $personalNo, string $today = 'today'): int {
         $match = $this->getElements($personalNo);
 
         $birthday = $match['year'] . '-' . $match['month'] . '-' . $match['day'];
 
-        /*
-         * 000-499 -> 1900-1999.
-         * 500-749 -> 1854-1899.
-         * 500-999 -> 2000-2039.
-         * 900-999 -> 1940-1999.
-         */
-        if ($match['individualNumber'] <= 499) {
-            $birthday = '19' . $birthday;
+        $individualNumber = intval($match['individualNumber']);
+        $year = intval($match['year']);
+
+        $century = 19;
+
+        if ($individualNumber > 499) {
+            if ($individualNumber < 750 && $year >= 54) {
+                $century = 18;
+            } elseif ($year < 40) {
+                $century = 20;
+            } elseif ($individualNumber >= 900 && $year >= 40) { // special cases
+                $century = 19;
+            }
         }
+
+        $birthday = $century . $birthday;
 
         return $this->calculateAge($birthday, $today);
     }
 
+    /**
+     * Returns a censored version of the personal number.
+     *
+     * @param string $personalNo
+     * @return string
+     */
     public function getCensored(string $personalNo): string {
         $match = $this->getElements($personalNo);
 
         return $match['day'] . $match['month'] . $match['year'] . '*****';
+    }
+
+    /**
+     * Returns the gender from the personal number.
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getGender(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+        $identifier = intval($match['individualNumber']);
+
+        if (($identifier % 2) == 0) {
+            return 'f';
+        }
+
+        return 'm';
     }
 }

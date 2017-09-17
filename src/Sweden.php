@@ -5,11 +5,6 @@ namespace Bekrafta;
 use DateTime;
 
 class Sweden extends BekraftaAbstract {
-    /**
-     * @var string Regex pattern to verify the format of the personal no.
-     */
-    protected $format;
-
     public function __construct() {
         $this->format = '#^';
         $this->format .= '(?P<year>[0-9]{2})';
@@ -39,12 +34,25 @@ class Sweden extends BekraftaAbstract {
         return true;
     }
 
+    /**
+     * Returns a censored version of the personal number.
+     *
+     * @param string $personalNo
+     * @return string
+     */
     public function getCensored(string $personalNo): string {
         $match = $this->getElements($personalNo);
 
         return $match['year'] . $match['month'] . $match['day'] . $match['separator'] . '****';
     }
 
+    /**
+     * Gets the age of the person using the personal number.
+     *
+     * @param string $personalNo
+     * @param string $today
+     * @return int
+     */
     public function getAge(string $personalNo, string $today = 'today'): int {
         $match = $this->getElements($personalNo);
 
@@ -61,5 +69,22 @@ class Sweden extends BekraftaAbstract {
         }
 
         return $this->calculateAge($prefix . $birthday, $today);
+    }
+
+    /**
+     * Returns the gender from the personal number.
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getGender(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+        $identifier = intval($match['identifier']);
+
+        if (($identifier % 2) == 0) {
+            return 'f';
+        }
+
+        return 'm';
     }
 }
