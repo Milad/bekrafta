@@ -1,7 +1,6 @@
 {
   "name": "miladk/bekrafta",
   "description": "Validate Personal Numbers",
-  "type": "library",
   "license": "MIT",
   "authors": [
     {
