@@ -23,6 +23,17 @@ class PersonalNumberTest extends TestCase {
         $this->assertTrue((new PersonalNumber('22071799674'))->detect());
         $this->assertTrue((new PersonalNumber('22071799402'))->detect());
         $this->assertFalse((new PersonalNumber('22071799404'))->detect());
+
+        $this->assertTrue((new PersonalNumber('130600-5738'))->detect());
+        $this->assertTrue((new PersonalNumber('070777-1119'))->detect());
+        $this->assertTrue((new PersonalNumber('260783-1234'))->detect());
+        $this->assertTrue((new PersonalNumber('120494-3806'))->detect());
+        $this->assertTrue((new PersonalNumber('220890-4895'))->detect());
+        $this->assertTrue((new PersonalNumber('310586-4948'))->detect());
+        $this->assertTrue((new PersonalNumber('171263-1615'))->detect());
+        $this->assertTrue((new PersonalNumber('150517-3712'))->detect());
+        $this->assertTrue((new PersonalNumber('120917-3804'))->detect());
+        $this->assertTrue((new PersonalNumber('211062-5629'))->detect());
     }
 
     public function testGetCensored() {

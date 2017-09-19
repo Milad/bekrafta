@@ -8,7 +8,7 @@ class Finland extends BekraftaAbstract {
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
         $this->format .= '(?P<year>[0-9]{2})';
-        $this->format .= '(?P<centurySign>[\-+A])?';
+        $this->format .= '(?P<centurySign>[\-+A])';
         $this->format .= '(?P<individualNumber>[0-9]{3})';
         $this->format .= '(?P<checksum>[0-9A-Y])';
         $this->format .= '#i';

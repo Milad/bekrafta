@@ -2,6 +2,7 @@
 [Bekräfta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): A PHP library to perform common operations on personal numbers, like: Validation, censoring the individual digits, calculating age and detecting gender.
 
 ### Supported Countries
+- Denmark
 - Finland
 - Norway
 - Sweden
