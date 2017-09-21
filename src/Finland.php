@@ -1,9 +1,19 @@
 <?php
+/*
+88""Yb 888888 88  dP 88""Yb    db    888888 888888    db
+88__dP 88__   88odP  88__dP   dPYb   88__     88     dPYb
+88""Yb 88""   88"Yb  88"Yb   dP__Yb  88""     88    dP__Yb
+88oodP 888888 88  Yb 88  Yb dP""""Yb 88       88   dP""""Yb
+*/
 
 namespace Bekrafta;
 
 class Finland extends BekraftaAbstract {
-    public function __construct() {
+    /**
+     * Finland constructor.
+     * @param string $personalNo
+     */
+    public function __construct(string $personalNo) {
         $this->format = '#';
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
@@ -12,88 +22,14 @@ class Finland extends BekraftaAbstract {
         $this->format .= '(?P<individualNumber>[0-9]{3})';
         $this->format .= '(?P<checksum>[0-9A-Y])';
         $this->format .= '#i';
+
+        parent::__construct($personalNo);
     }
 
-    /**
-     * Uses all the required test to validate a personal no.
-     * @param $personalNo string
-     * @return bool
-     */
-    public function validate(string $personalNo): bool {
-        $personalNo = trim($personalNo);
-
-        if (empty($personalNo) || !$this->validateFormat($personalNo)
-            || !$this->isValidChecksum($personalNo)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Validates the checksum of the personal number.
-     *
-     * @param string $personalNo
-     * @return bool
-     */
-    protected function isValidChecksum(string $personalNo): bool {
-        $controlCharacter = "0123456789ABCDEFHJKLMNPRSTUVWXY";
-
-        $match = $this->getElements($personalNo);
-
-        $num = $match['day'] . $match['month'] . $match['year'] . $match['individualNumber'];
-        $num = intval($num);
-
-        $remainder = $num % 31;
-
-        if ($controlCharacter[$remainder] == strtoupper($match['checksum'])) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns a censored version of the personal number.
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getCensored(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-
-        return $match['day'] . $match['month'] . $match['year'] . $match['centurySign'] . '****';
-    }
-
-    /**
-     * Returns the gender from the personal number.
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getGender(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-        $identifier = intval($match['individualNumber']);
-
-        if (($identifier % 2) == 0) {
-            return 'f';
-        }
-
-        return 'm';
-    }
-
-    /**
-     * Takes personal number and calculate the year of birth
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getYear(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-
+    public function getYear(): string {
         $century = '19';
 
-        switch ($match['centurySign']) {
+        switch ($this->elements['centurySign']) {
             case '-':
                 $century = '19';
                 break;
@@ -105,6 +41,43 @@ class Finland extends BekraftaAbstract {
                 break;
         }
 
-        return $century . $match['year'];
+        return $century . $this->elements['year'];
+    }
+
+    protected function validateChecksum(): bool {
+        $controlCharacter = "0123456789ABCDEFHJKLMNPRSTUVWXY";
+
+        $num = $this->elements['day'] .
+            $this->elements['month'] .
+            $this->elements['year'] .
+            $this->elements['individualNumber'];
+
+        $num = intval($num);
+
+        $remainder = $num % 31;
+
+        if ($controlCharacter[$remainder] == strtoupper($this->elements['checksum'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getCensored(): string {
+        return $this->elements['day'] .
+            $this->elements['month'] .
+            $this->elements['year'] .
+            $this->elements['centurySign'] .
+            '****';
+    }
+
+    public function getGender(): string {
+        $identifier = intval($this->elements['individualNumber']);
+
+        if (($identifier % 2) == 0) {
+            return 'f';
+        }
+
+        return 'm';
     }
 }

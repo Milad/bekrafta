@@ -1,71 +1,107 @@
 <?php
+/*
+88""Yb 888888 88  dP 88""Yb    db    888888 888888    db
+88__dP 88__   88odP  88__dP   dPYb   88__     88     dPYb
+88""Yb 88""   88"Yb  88"Yb   dP__Yb  88""     88    dP__Yb
+88oodP 888888 88  Yb 88  Yb dP""""Yb 88       88   dP""""Yb
+*/
 
 namespace Bekrafta;
 
 use DateTime;
-use Exception;
 
 abstract class BekraftaAbstract {
+    /**
+     * @var string Personal Number
+     */
+    protected $personalNo;
+
+    /**
+     * @var array Elements of the personal no.
+     */
+    protected $elements;
+
     /**
      * @var string Regex pattern to verify the format of the personal no.
      */
     protected $format;
 
     /**
-     * Uses all the required test to validate a personal no.
-     * @param $personalNo string
-     * @return bool
+     * BekraftaAbstract constructor.
+     * @param string $personalNo The personal no.
      */
-    abstract public function validate(string $personalNo): bool;
-
-    /**
-     * Validates the format of a personal no.
-     * Does not checksum the no.
-     * @param $personalNo string
-     * @return bool
-     */
-    public function validateFormat(string $personalNo): bool {
-        preg_match($this->format, $personalNo, $match);
-
-        if (!$match) {
-            return false;
-        }
-
-        return true;
+    public function __construct(string $personalNo) {
+        $this->personalNo = trim($personalNo);
+        $this->validateFormat();
     }
 
     /**
-     * Returns a censored version of the personal number.
-     *
-     * @param string $personalNo
+     * Uses all the required tests to validate a personal no.
+     * @return bool
+     */
+    public function validate(): bool {
+        return (
+            !empty($this->personalNo) &&
+            $this->validateFormat() &&
+            $this->validateDate() &&
+            $this->validateChecksum()
+        );
+    }
+
+    /**
+     * Validates the format of a personal no.
+     * @return bool
+     */
+    protected function validateFormat(): bool {
+        if (preg_match($this->format, $this->personalNo, $match)) {
+            $this->elements = $match;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Takes personal number and calculate the year of birth.
      * @return string
      */
-    abstract public function getCensored(string $personalNo): string;
+    abstract public function getYear(): string;
+
+    /**
+     * Checks if the birthday is valid.
+     * @return bool
+     */
+    protected function validateDate(): bool {
+        return checkdate($this->elements['month'], $this->elements['day'], $this->getYear());
+    }
+
+    /**
+     * Validates the checksum.
+     * @return bool
+     */
+    abstract protected function validateChecksum(): bool;
+
+    /**
+     * Takes the personal number and returns the birthday in the format YYYY-MM-DD
+     * @return string
+     */
+    public function getBirthday(): string {
+        return $this->getYear() . '-' . $this->elements['month'] . '-' . $this->elements['day'];
+    }
 
     /**
      * Gets the age of the person using the personal number.
-     *
-     * @param string $personalNo
      * @param string $today
      * @return int
      */
-    public function getAge(string $personalNo, string $today = 'today'): int {
-        $birthday = $this->getBirthday($personalNo);
+    public function getAge(string $today = 'today'): int {
+        $birthday = $this->getBirthday();
 
         return $this->calculateAge($birthday, $today);
     }
 
     /**
-     * Returns the gender from the personal number.
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    abstract public function getGender(string $personalNo): string;
-
-    /**
      * Calculates the age from the birthday.
-     *
      * @param string $birthday
      * @param string $today
      * @return int
@@ -78,37 +114,14 @@ abstract class BekraftaAbstract {
     }
 
     /**
-     * Breaks the personal number into its elements.
-     *
-     * @param string $personalNo
-     * @return array
-     * @throws Exception
-     */
-    protected function getElements(string $personalNo): array {
-        if (preg_match($this->format, $personalNo, $match) !== 1) {
-            throw new Exception("The provided personal number doesn't match the format.");
-        }
-
-        return $match;
-    }
-
-    /**
-     * Takes personal number and calculate the year of birth
-     *
-     * @param string $personalNo
+     * Returns a censored version of the personal number.
      * @return string
      */
-    abstract public function getYear(string $personalNo): string;
+    abstract public function getCensored(): string;
 
     /**
-     * Takes the personal number and returns the birthday in the format YYYY-MM-DD
-     *
-     * @param string $personalNo
+     * Returns the gender from the personal number.
      * @return string
      */
-    protected function getBirthday(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-
-        return $this->getYear($personalNo) . '-' . $match['month'] . '-' . $match['day'];
-    }
+    abstract public function getGender(): string;
 }

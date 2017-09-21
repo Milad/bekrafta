@@ -1,4 +1,10 @@
 <?php
+/*
+88""Yb 888888 88  dP 88""Yb    db    888888 888888    db
+88__dP 88__   88odP  88__dP   dPYb   88__     88     dPYb
+88""Yb 88""   88"Yb  88"Yb   dP__Yb  88""     88    dP__Yb
+88oodP 888888 88  Yb 88  Yb dP""""Yb 88       88   dP""""Yb
+*/
 
 namespace Bekrafta\Tests;
 
@@ -7,87 +13,79 @@ use PHPUnit\Framework\TestCase;
 
 class NorwayTest extends TestCase {
     public function testValidate() {
-        $validator = new Norway();
-
         // https://en.wikipedia.org/wiki/National_identification_number#Norway
-        $this->assertTrue($validator->validate('22071799674'));
-        $this->assertTrue($validator->validate('22071799402'));
-        $this->assertTrue($validator->validate('22071799240'));
-        $this->assertTrue($validator->validate('29029600013'));
-        $this->assertTrue($validator->validate('22071799755'));
-        $this->assertTrue($validator->validate('22071799593'));
-        $this->assertTrue($validator->validate('22071799321'));
+        $this->assertTrue((new Norway('22071799674'))->validate());
+        $this->assertTrue((new Norway('22071799402'))->validate());
+        $this->assertTrue((new Norway('22071799240'))->validate());
+        $this->assertTrue((new Norway('29029600013'))->validate());
+        $this->assertTrue((new Norway('22071799755'))->validate());
+        $this->assertTrue((new Norway('22071799593'))->validate());
+        $this->assertTrue((new Norway('22071799321'))->validate());
 
-        $this->assertFalse($validator->validate('22071799325'));
-        $this->assertFalse($validator->validate('03119975255'));
-        $this->assertFalse($validator->validate('67047000658'));
-        $this->assertFalse($validator->validate('18099805991'));
-        $this->assertFalse($validator->validate('53124717928'));
+        $this->assertFalse((new Norway('22071799325'))->validate());
+        $this->assertFalse((new Norway('03119975255'))->validate());
+        $this->assertFalse((new Norway('67047000658'))->validate());
+        $this->assertFalse((new Norway('18099805991'))->validate());
+        $this->assertFalse((new Norway('53124717928'))->validate());
     }
 
     public function testGetAge() {
         $today = '2017-07-19';
 
-        $validator = new Norway();
-
-        $this->assertEquals(0, $validator->getAge('22071799674', $today));
-        $this->assertEquals(0, $validator->getAge('22071799402', $today));
-        $this->assertEquals(0, $validator->getAge('22071799240', $today));
-        $this->assertEquals(21, $validator->getAge('29029600013', $today));
-        $this->assertEquals(0, $validator->getAge('22071799755', $today));
-        $this->assertEquals(0, $validator->getAge('22071799593', $today));
-        $this->assertEquals(0, $validator->getAge('22071799321', $today));
-        $this->assertEquals(117, $validator->getAge('01129955131', $today));
-        $this->assertEquals(1, $validator->getAge('03111590925', $today));
-        $this->assertEquals(15, $validator->getAge('03110175225', $today));
-        $this->assertEquals(116, $validator->getAge('01010114388', $today));
-        $this->assertEquals(116, $validator->getAge('01010116550', $today));
-        $this->assertEquals(116, $validator->getAge('01010149939', $today));
-        $this->assertEquals(17, $validator->getAge('15070091884', $today));
-        $this->assertEquals(18, $validator->getAge('12119806192', $today));
-        $this->assertEquals(63, $validator->getAge('11115328435', $today));
-        $this->assertEquals(67, $validator->getAge('27124939173', $today));
-        $this->assertEquals(84, $validator->getAge('22103238602', $today));
-        $this->assertEquals(13, $validator->getAge('12050464596', $today));
-        $this->assertEquals(146, $validator->getAge('17037174246', $today));
-        $this->assertEquals(148, $validator->getAge('14036950049', $today));
-        $this->assertEquals(3, $validator->getAge('29101353689', $today));
-        $this->assertEquals(8, $validator->getAge('15090869180', $today));
-        $this->assertEquals(107, $validator->getAge('31031022188', $today));
-        $this->assertEquals(75, $validator->getAge('05084115322', $today));
-        $this->assertEquals(72, $validator->getAge('15104491526', $today));
+        $this->assertEquals(0, (new Norway('22071799674'))->getAge($today));
+        $this->assertEquals(0, (new Norway('22071799402'))->getAge($today));
+        $this->assertEquals(0, (new Norway('22071799240'))->getAge($today));
+        $this->assertEquals(21, (new Norway('29029600013'))->getAge($today));
+        $this->assertEquals(0, (new Norway('22071799755'))->getAge($today));
+        $this->assertEquals(0, (new Norway('22071799593'))->getAge($today));
+        $this->assertEquals(0, (new Norway('22071799321'))->getAge($today));
+        $this->assertEquals(117, (new Norway('01129955131'))->getAge($today));
+        $this->assertEquals(1, (new Norway('03111590925'))->getAge($today));
+        $this->assertEquals(15, (new Norway('03110175225'))->getAge($today));
+        $this->assertEquals(116, (new Norway('01010114388'))->getAge($today));
+        $this->assertEquals(116, (new Norway('01010116550'))->getAge($today));
+        $this->assertEquals(116, (new Norway('01010149939'))->getAge($today));
+        $this->assertEquals(17, (new Norway('15070091884'))->getAge($today));
+        $this->assertEquals(18, (new Norway('12119806192'))->getAge($today));
+        $this->assertEquals(63, (new Norway('11115328435'))->getAge($today));
+        $this->assertEquals(67, (new Norway('27124939173'))->getAge($today));
+        $this->assertEquals(84, (new Norway('22103238602'))->getAge($today));
+        $this->assertEquals(13, (new Norway('12050464596'))->getAge($today));
+        $this->assertEquals(146, (new Norway('17037174246'))->getAge($today));
+        $this->assertEquals(148, (new Norway('14036950049'))->getAge($today));
+        $this->assertEquals(3, (new Norway('29101353689'))->getAge($today));
+        $this->assertEquals(8, (new Norway('15090869180'))->getAge($today));
+        $this->assertEquals(107, (new Norway('31031022188'))->getAge($today));
+        $this->assertEquals(75, (new Norway('05084115322'))->getAge($today));
+        $this->assertEquals(72, (new Norway('15104491526'))->getAge($today));
     }
 
     public function testGetCensored() {
-        $validator = new Norway();
-
-        $this->assertEquals('220717*****', $validator->getCensored('22071799674'));
-        $this->assertEquals('220717*****', $validator->getCensored('22071799402'));
-        $this->assertEquals('220717*****', $validator->getCensored('22071799240'));
-        $this->assertEquals('290296*****', $validator->getCensored('29029600013'));
-        $this->assertEquals('220717*****', $validator->getCensored('22071799755'));
-        $this->assertEquals('220717*****', $validator->getCensored('22071799593'));
-        $this->assertEquals('220717*****', $validator->getCensored('22071799321'));
+        $this->assertEquals('220717*****', (new Norway('22071799674'))->getCensored());
+        $this->assertEquals('220717*****', (new Norway('22071799402'))->getCensored());
+        $this->assertEquals('220717*****', (new Norway('22071799240'))->getCensored());
+        $this->assertEquals('290296*****', (new Norway('29029600013'))->getCensored());
+        $this->assertEquals('220717*****', (new Norway('22071799755'))->getCensored());
+        $this->assertEquals('220717*****', (new Norway('22071799593'))->getCensored());
+        $this->assertEquals('220717*****', (new Norway('22071799321'))->getCensored());
     }
 
     public function testGetGender() {
-        $validator = new Norway();
-
-        $this->assertEquals('f', $validator->getGender('22071799674'));
-        $this->assertEquals('f', $validator->getGender('22071799402'));
-        $this->assertEquals('f', $validator->getGender('22071799240'));
-        $this->assertEquals('f', $validator->getGender('29029600013'));
-        $this->assertEquals('m', $validator->getGender('22071799755'));
-        $this->assertEquals('m', $validator->getGender('22071799593'));
-        $this->assertEquals('m', $validator->getGender('22071799321'));
-        $this->assertEquals('m', $validator->getGender('05084115322'));
-        $this->assertEquals('m', $validator->getGender('21034535105'));
-        $this->assertEquals('m', $validator->getGender('25127115195'));
-        $this->assertEquals('m', $validator->getGender('14090790987'));
-        $this->assertEquals('m', $validator->getGender('18112481504'));
-        $this->assertEquals('f', $validator->getGender('26090380809'));
-        $this->assertEquals('f', $validator->getGender('07076627678'));
-        $this->assertEquals('f', $validator->getGender('17099033487'));
-        $this->assertEquals('f', $validator->getGender('23047652480'));
+        $this->assertEquals('f', (new Norway('22071799674'))->getGender());
+        $this->assertEquals('f', (new Norway('22071799402'))->getGender());
+        $this->assertEquals('f', (new Norway('22071799240'))->getGender());
+        $this->assertEquals('f', (new Norway('29029600013'))->getGender());
+        $this->assertEquals('m', (new Norway('22071799755'))->getGender());
+        $this->assertEquals('m', (new Norway('22071799593'))->getGender());
+        $this->assertEquals('m', (new Norway('22071799321'))->getGender());
+        $this->assertEquals('m', (new Norway('05084115322'))->getGender());
+        $this->assertEquals('m', (new Norway('21034535105'))->getGender());
+        $this->assertEquals('m', (new Norway('25127115195'))->getGender());
+        $this->assertEquals('m', (new Norway('14090790987'))->getGender());
+        $this->assertEquals('m', (new Norway('18112481504'))->getGender());
+        $this->assertEquals('f', (new Norway('26090380809'))->getGender());
+        $this->assertEquals('f', (new Norway('07076627678'))->getGender());
+        $this->assertEquals('f', (new Norway('17099033487'))->getGender());
+        $this->assertEquals('f', (new Norway('23047652480'))->getGender());
     }
 }

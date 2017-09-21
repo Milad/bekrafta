@@ -1,9 +1,19 @@
 <?php
+/*
+88""Yb 888888 88  dP 88""Yb    db    888888 888888    db
+88__dP 88__   88odP  88__dP   dPYb   88__     88     dPYb
+88""Yb 88""   88"Yb  88"Yb   dP__Yb  88""     88    dP__Yb
+88oodP 888888 88  Yb 88  Yb dP""""Yb 88       88   dP""""Yb
+*/
 
 namespace Bekrafta;
 
 class Norway extends BekraftaAbstract {
-    public function __construct() {
+    /**
+     * Norway constructor.
+     * @param string $personalNo
+     */
+    public function __construct(string $personalNo) {
         $this->format = '#';
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
@@ -12,98 +22,13 @@ class Norway extends BekraftaAbstract {
         $this->format .= '(?P<checksum1>[0-9])';
         $this->format .= '(?P<checksum2>[0-9])';
         $this->format .= '#';
+
+        parent::__construct($personalNo);
     }
 
-    /**
-     * Uses all the required test to validate a personal no.
-     * @param $personalNo string
-     * @return bool
-     */
-    public function validate(string $personalNo): bool {
-        $personalNo = trim($personalNo);
-
-        if (empty($personalNo) || !$this->validateFormat($personalNo)
-            || !$this->isValidChecksum($personalNo)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Are both checksums valid?
-     * @param string $personalNo
-     * @return bool
-     */
-    protected function isValidChecksum(string $personalNo): bool {
-        $group1 = [3, 7, 6, 1, 8, 9, 4, 5, 2, 1];
-        $group2 = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1];
-
-        if (!$this->validateCheckSum($personalNo, $group1) or
-            !$this->validateCheckSum($personalNo, $group2)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Validets a checksum in the personal number.
-     *
-     * @param string $personalNo
-     * @param array $numbers
-     * @return bool
-     */
-    protected function validateCheckSum(string $personalNo, array $numbers) {
-        $sum = 0;
-
-        foreach ($numbers as $index => $number) {
-            $sum += ($number * intval($personalNo[$index]));
-        }
-
-        return $sum % 11 === 0;
-    }
-
-    /**
-     * Returns a censored version of the personal number.
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getCensored(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-
-        return $match['day'] . $match['month'] . $match['year'] . '*****';
-    }
-
-    /**
-     * Returns the gender from the personal number.
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getGender(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-        $identifier = intval($match['individualNumber']);
-
-        if (($identifier % 2) == 0) {
-            return 'f';
-        }
-
-        return 'm';
-    }
-
-    /**
-     * Takes personal number and calculate the year of birth
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getYear(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-
-        $individualNumber = intval($match['individualNumber']);
-        $year = intval($match['year']);
+    public function getYear(): string {
+        $individualNumber = intval($this->elements['individualNumber']);
+        $year = intval($this->elements['year']);
 
         $century = 19;
 
@@ -117,6 +42,47 @@ class Norway extends BekraftaAbstract {
             }
         }
 
-        return $century . $match['year'];
+        return $century . $this->elements['year'];
+    }
+
+    protected function validateChecksum(): bool {
+        $group1 = [3, 7, 6, 1, 8, 9, 4, 5, 2, 1];
+        $group2 = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1];
+
+        if (!$this->validateBitCheckSum($group1) or
+            !$this->validateBitCheckSum($group2)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validets a checksum in the personal number.
+     * @param array $numbers
+     * @return bool
+     */
+    protected function validateBitCheckSum(array $numbers) {
+        $sum = 0;
+
+        foreach ($numbers as $index => $number) {
+            $sum += ($number * intval($this->personalNo[$index]));
+        }
+
+        return $sum % 11 === 0;
+    }
+
+    public function getCensored(): string {
+        return $this->elements['day'] . $this->elements['month'] . $this->elements['year'] . '*****';
+    }
+
+    public function getGender(): string {
+        $identifier = intval($this->elements['individualNumber']);
+
+        if (($identifier % 2) == 0) {
+            return 'f';
+        }
+
+        return 'm';
     }
 }

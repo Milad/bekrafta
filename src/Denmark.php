@@ -1,9 +1,19 @@
 <?php
+/*
+88""Yb 888888 88  dP 88""Yb    db    888888 888888    db
+88__dP 88__   88odP  88__dP   dPYb   88__     88     dPYb
+88""Yb 88""   88"Yb  88"Yb   dP__Yb  88""     88    dP__Yb
+88oodP 888888 88  Yb 88  Yb dP""""Yb 88       88   dP""""Yb
+*/
 
 namespace Bekrafta;
 
 class Denmark extends BekraftaAbstract {
-    public function __construct() {
+    /**
+     * Denmark constructor.
+     * @param string $personalNo
+     */
+    public function __construct(string $personalNo) {
         $this->format = '#';
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
@@ -13,69 +23,13 @@ class Denmark extends BekraftaAbstract {
         $this->format .= '(?P<individualNumber>[0-9]{2})';
         $this->format .= '(?P<checksum>[0-9])';
         $this->format .= '#';
+
+        parent::__construct($personalNo);
     }
 
-    /**
-     * Uses all the required test to validate a personal no.
-     * @param $personalNo string
-     * @return bool
-     */
-    public function validate(string $personalNo): bool {
-        $personalNo = trim($personalNo);
-
-        if (empty($personalNo) or !$this->validateFormat($personalNo)) {
-            return false;
-        }
-
-        $birthday = $this->getBirthday($personalNo);
-        $birthdayBits = explode('-', $birthday);
-        if (!checkdate($birthdayBits[1], $birthdayBits[2], $birthdayBits[0])) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns the gender from the personal number.
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getGender(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-        $identifier = intval($match['checksum']);
-
-        if (($identifier % 2) == 0) {
-            return 'f';
-        }
-
-        return 'm';
-    }
-
-    /**
-     * Returns a censored version of the personal number.
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getCensored(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-
-        return $match['day'] . $match['month'] . $match['year'] . '-****';
-    }
-
-    /**
-     * Takes personal number and calculate the year of birth
-     *
-     * @param string $personalNo
-     * @return string
-     */
-    public function getYear(string $personalNo): string {
-        $match = $this->getElements($personalNo);
-
-        $centuryIndicator = intval($match['centuryIndicator']);
-        $year = intval($match['year']);
+    public function getYear(): string {
+        $centuryIndicator = intval($this->elements['centuryIndicator']);
+        $year = intval($this->elements['year']);
 
         // https://da.wikipedia.org/wiki/CPR-nummer#Under_eller_over_100_.C3.A5r
         $century = '19';
@@ -87,6 +41,26 @@ class Denmark extends BekraftaAbstract {
             $century = '18';
         }
 
-        return $century . $match['year'];
+        return $century . $this->elements['year'];
+    }
+
+    protected function validateChecksum(): bool {
+        // Since not all Danish numbers validate
+        // Then there is no point of checking them!
+        return true;
+    }
+
+    public function getCensored(): string {
+        return $this->elements['day'] . $this->elements['month'] . $this->elements['year'] . '-****';
+    }
+
+    public function getGender(): string {
+        $identifier = intval($this->elements['checksum']);
+
+        if (($identifier % 2) == 0) {
+            return 'f';
+        }
+
+        return 'm';
     }
 }

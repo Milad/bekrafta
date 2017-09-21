@@ -47,22 +47,25 @@ Or you can use a specific country if you only need that.
 ```php
 use Bekrafta\Sweden;
 
-$oSweden = new Sweden();
+$oSweden = new Sweden('811228-9874');
 
 // True on valid personal number, false otherwise.
-$oSweden->validate('811228-9874');
+$oSweden->validate();
 
 // 811228-****
-$oSweden->getCensored('811228-9874');
+$oSweden->getCensored();
 
 // 35
-$oSweden->getAge('811228-9874');
+$oSweden->getAge();
 
 // m
-$oSweden->getGender('811228-9874');
+$oSweden->getGender();
 
 // 1981
-$oSweden->getYear('811228-9874');
+$oSweden->getYear();
+
+// 1981-12-28
+$oSweden->getBirthday();
 ```
 
 # Sweden Extended
