@@ -66,19 +66,12 @@ class Denmark extends BekraftaAbstract {
     }
 
     /**
-     * Gets the age of the person using the personal number.
+     * Takes personal number and calculate the year of birth
      *
      * @param string $personalNo
-     * @param string $today
-     * @return int
+     * @return string
      */
-    public function getAge(string $personalNo, string $today = 'today'): int {
-        $birthday = $this->getBirthday($personalNo);
-
-        return $this->calculateAge($birthday, $today);
-    }
-
-    protected function getBirthday(string $personalNo): string {
+    public function getYear(string $personalNo): string {
         $match = $this->getElements($personalNo);
 
         $centuryIndicator = intval($match['centuryIndicator']);
@@ -94,6 +87,6 @@ class Denmark extends BekraftaAbstract {
             $century = '18';
         }
 
-        return $century . $match['year'] . '-' . $match['month'] . '-' . $match['day'];
+        return $century . $match['year'];
     }
 }

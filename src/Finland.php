@@ -66,33 +66,6 @@ class Finland extends BekraftaAbstract {
     }
 
     /**
-     * Gets the age of the person using the personal number.
-     *
-     * @param string $personalNo
-     * @param string $today
-     * @return int
-     */
-    public function getAge(string $personalNo, string $today = 'today'): int {
-        $match = $this->getElements($personalNo);
-
-        $birthday = $match['year'] . '-' . $match['month'] . '-' . $match['day'];
-
-        switch ($match['centurySign']) {
-            case '-':
-                $birthday = '19' . $birthday;
-                break;
-            case '+':
-                $birthday = '18' . $birthday;
-                break;
-            case 'A':
-                $birthday = '20' . $birthday;
-                break;
-        }
-
-        return $this->calculateAge($birthday, $today);
-    }
-
-    /**
      * Returns the gender from the personal number.
      *
      * @param string $personalNo
@@ -107,5 +80,31 @@ class Finland extends BekraftaAbstract {
         }
 
         return 'm';
+    }
+
+    /**
+     * Takes personal number and calculate the year of birth
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getYear(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+
+        $century = '19';
+
+        switch ($match['centurySign']) {
+            case '-':
+                $century = '19';
+                break;
+            case '+':
+                $century = '18';
+                break;
+            case 'A':
+                $century = '20';
+                break;
+        }
+
+        return $century . $match['year'];
     }
 }

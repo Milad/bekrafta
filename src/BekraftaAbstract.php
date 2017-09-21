@@ -49,7 +49,11 @@ abstract class BekraftaAbstract {
      * @param string $today
      * @return int
      */
-    abstract public function getAge(string $personalNo, string $today = 'today'): int;
+    public function getAge(string $personalNo, string $today = 'today'): int {
+        $birthday = $this->getBirthday($personalNo);
+
+        return $this->calculateAge($birthday, $today);
+    }
 
     /**
      * Returns the gender from the personal number.
@@ -86,5 +90,25 @@ abstract class BekraftaAbstract {
         }
 
         return $match;
+    }
+
+    /**
+     * Takes personal number and calculate the year of birth
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    abstract public function getYear(string $personalNo): string;
+
+    /**
+     * Takes the personal number and returns the birthday in the format YYYY-MM-DD
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    protected function getBirthday(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+
+        return $this->getYear($personalNo) . '-' . $match['month'] . '-' . $match['day'];
     }
 }

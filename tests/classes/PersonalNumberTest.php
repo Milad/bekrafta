@@ -66,6 +66,45 @@ class PersonalNumberTest extends TestCase {
         $obj->getAge($today);
     }
 
+    public function testGetYear() {
+        $obj = new PersonalNumber('240696-797T');
+        $this->assertEquals('1996', $obj->getYear());
+
+        $obj = new PersonalNumber('200278-704B');
+        $this->assertEquals('1978', $obj->getYear());
+
+        $obj = new PersonalNumber('21034535105');
+        $this->assertEquals('1945', $obj->getYear());
+
+        $obj = new PersonalNumber('07076627678');
+        $this->assertEquals('1966', $obj->getYear());
+
+        $obj = new PersonalNumber('671017-1239');
+        $this->assertEquals('1967', $obj->getYear());
+
+        $obj = new PersonalNumber('111228+7568');
+        $this->assertEquals('1911', $obj->getYear());
+
+        $obj = new PersonalNumber('19671017-1239');
+        $this->assertEquals('1967', $obj->getYear());
+
+        $obj = new PersonalNumber('19111228+7568');
+        $this->assertEquals('1911', $obj->getYear());
+
+        $obj = new PersonalNumber('310586-4948');
+        $this->assertEquals('1986', $obj->getYear());
+
+        $obj = new PersonalNumber('120494-3806');
+        $this->assertEquals('1994', $obj->getYear());
+
+        $obj = new PersonalNumber('211062-5629');
+        $this->assertEquals('1862', $obj->getYear());
+
+        $obj = new PersonalNumber('877898-8797');
+        $this->expectException(Exception::class);
+        $obj->getYear();
+    }
+
     public function testGetGender() {
         $obj = new PersonalNumber('240696-797T');
         $this->assertEquals('m', $obj->getGender());

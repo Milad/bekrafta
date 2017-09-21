@@ -37,6 +37,9 @@ $oPN->getAge();
 
 // m
 $oPN->getGender();
+
+// 1981
+$oPM->getYear();
 ```
 
 Or you can use a specific country if you only need that.
@@ -52,11 +55,14 @@ $oSweden->validate('811228-9874');
 // 811228-****
 $oSweden->getCensored('811228-9874');
 
- // 35
+// 35
 $oSweden->getAge('811228-9874');
 
- // m
+// m
 $oSweden->getGender('811228-9874');
+
+// 1981
+$oSweden->getYear('811228-9874');
 ```
 
 # Sweden Extended

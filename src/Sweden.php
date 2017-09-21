@@ -47,31 +47,6 @@ class Sweden extends BekraftaAbstract {
     }
 
     /**
-     * Gets the age of the person using the personal number.
-     *
-     * @param string $personalNo
-     * @param string $today
-     * @return int
-     */
-    public function getAge(string $personalNo, string $today = 'today'): int {
-        $match = $this->getElements($personalNo);
-
-        $birthday = $match['year'] . '-' . $match['month'] . '-' . $match['day'];
-
-        $todayObj = new DateTime($today);
-
-        if ($todayObj < new DateTime('20' . $birthday)) {
-            $prefix = '19';
-        } elseif ($todayObj >= new DateTime('20' . $birthday) && $match['separator'] === '-') {
-            $prefix = '20';
-        } elseif ($todayObj >= new DateTime('19' . $birthday) && $match['separator'] === '+') {
-            $prefix = '19';
-        }
-
-        return $this->calculateAge($prefix . $birthday, $today);
-    }
-
-    /**
      * Returns the gender from the personal number.
      *
      * @param string $personalNo
@@ -86,5 +61,31 @@ class Sweden extends BekraftaAbstract {
         }
 
         return 'm';
+    }
+
+    /**
+     * Takes personal number and calculate the year of birth
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getYear(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+
+        $birthday = $match['year'] . '-' . $match['month'] . '-' . $match['day'];
+
+        $todayObj = new DateTime('today');
+
+        $century = '19';
+
+        if ($todayObj < new DateTime('20' . $birthday)) {
+            $century = '19';
+        } elseif ($todayObj >= new DateTime('20' . $birthday) && $match['separator'] === '-') {
+            $century = '20';
+        } elseif ($todayObj >= new DateTime('19' . $birthday) && $match['separator'] === '+') {
+            $century = '19';
+        }
+
+        return $century . $match['year'];
     }
 }

@@ -65,38 +65,6 @@ class Norway extends BekraftaAbstract {
     }
 
     /**
-     * Gets the age of the person using the personal number.
-     *
-     * @param string $personalNo
-     * @param string $today
-     * @return int
-     */
-    public function getAge(string $personalNo, string $today = 'today'): int {
-        $match = $this->getElements($personalNo);
-
-        $birthday = $match['year'] . '-' . $match['month'] . '-' . $match['day'];
-
-        $individualNumber = intval($match['individualNumber']);
-        $year = intval($match['year']);
-
-        $century = 19;
-
-        if ($individualNumber > 499) {
-            if ($individualNumber < 750 && $year >= 54) {
-                $century = 18;
-            } elseif ($year < 40) {
-                $century = 20;
-            } elseif ($individualNumber >= 900 && $year >= 40) { // special cases
-                $century = 19;
-            }
-        }
-
-        $birthday = $century . $birthday;
-
-        return $this->calculateAge($birthday, $today);
-    }
-
-    /**
      * Returns a censored version of the personal number.
      *
      * @param string $personalNo
@@ -123,5 +91,32 @@ class Norway extends BekraftaAbstract {
         }
 
         return 'm';
+    }
+
+    /**
+     * Takes personal number and calculate the year of birth
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getYear(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+
+        $individualNumber = intval($match['individualNumber']);
+        $year = intval($match['year']);
+
+        $century = 19;
+
+        if ($individualNumber > 499) {
+            if ($individualNumber < 750 && $year >= 54) {
+                $century = 18;
+            } elseif ($year < 40) {
+                $century = 20;
+            } elseif ($individualNumber >= 900 && $year >= 40) { // special cases
+                $century = 19;
+            }
+        }
+
+        return $century . $match['year'];
     }
 }

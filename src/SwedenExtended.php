@@ -47,21 +47,6 @@ class SwedenExtended extends Sweden {
     }
 
     /**
-     * Gets the age of the person using the personal number.
-     *
-     * @param string $personalNo
-     * @param string $today
-     * @return int
-     */
-    public function getAge(string $personalNo, string $today = 'today'): int {
-        $match = $this->getElements($personalNo);
-
-        $birthday = $match['century'] . $match['year'] . '-' . $match['month'] . '-' . $match['day'];
-
-        return $this->calculateAge($birthday, $today);
-    }
-
-    /**
      * Removes the leading century digits because they are not
      * used to calculate the checksum
      * @param $personalNo string
@@ -82,5 +67,17 @@ class SwedenExtended extends Sweden {
             $match['checksum'];
 
         return $newPersonalNo;
+    }
+
+    /**
+     * Takes personal number and calculate the year of birth
+     *
+     * @param string $personalNo
+     * @return string
+     */
+    public function getYear(string $personalNo): string {
+        $match = $this->getElements($personalNo);
+
+        return $match['century'] . $match['year'];
     }
 }

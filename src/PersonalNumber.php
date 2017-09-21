@@ -70,6 +70,18 @@ class PersonalNumber {
         return $this->bekrafta->getGender($this->personalNo);
     }
 
+    public function getYear(): string {
+        if ($this->bekrafta === null) {
+            $this->detect();
+        }
+
+        if ($this->bekrafta === null) {
+            throw new Exception("No format was detected.");
+        }
+
+        return $this->bekrafta->getYear($this->personalNo);
+    }
+
     protected function getList(): array {
         $classes = [];
 
