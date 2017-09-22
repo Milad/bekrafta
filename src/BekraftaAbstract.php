@@ -27,6 +27,11 @@ abstract class BekraftaAbstract {
     protected $format;
 
     /**
+     * @var string Defines which element contains the gender.
+     */
+    protected $genderElement;
+
+    /**
      * BekraftaAbstract constructor.
      * @param string $personalNo The personal no.
      */
@@ -72,7 +77,11 @@ abstract class BekraftaAbstract {
      * @return bool
      */
     protected function validateDate(): bool {
-        return checkdate($this->elements['month'], $this->elements['day'], $this->getYear());
+        return checkdate(
+            (int) $this->elements['month'],
+            (int) $this->elements['day'],
+            (int) $this->getYear()
+        );
     }
 
     /**
@@ -123,5 +132,13 @@ abstract class BekraftaAbstract {
      * Returns the gender from the personal number.
      * @return string
      */
-    abstract public function getGender(): string;
+    public function getGender(): string {
+        $identifier = intval($this->elements[$this->genderElement]);
+
+        if (($identifier % 2) === 0) {
+            return 'f';
+        }
+
+        return 'm';
+    }
 }

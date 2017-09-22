@@ -9,12 +9,14 @@
 namespace Bekrafta;
 
 class Denmark extends BekraftaAbstract {
+    protected $genderElement = 'checksum';
+
     /**
      * Denmark constructor.
      * @param string $personalNo
      */
     public function __construct(string $personalNo) {
-        $this->format = '#';
+        $this->format = '#^';
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
         $this->format .= '(?P<year>[0-9]{2})';
@@ -22,7 +24,7 @@ class Denmark extends BekraftaAbstract {
         $this->format .= '(?P<centuryIndicator>[0-9])';
         $this->format .= '(?P<individualNumber>[0-9]{2})';
         $this->format .= '(?P<checksum>[0-9])';
-        $this->format .= '#';
+        $this->format .= '$#';
 
         parent::__construct($personalNo);
     }
@@ -52,15 +54,5 @@ class Denmark extends BekraftaAbstract {
 
     public function getCensored(): string {
         return $this->elements['day'] . $this->elements['month'] . $this->elements['year'] . '-****';
-    }
-
-    public function getGender(): string {
-        $identifier = intval($this->elements['checksum']);
-
-        if (($identifier % 2) == 0) {
-            return 'f';
-        }
-
-        return 'm';
     }
 }

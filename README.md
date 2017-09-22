@@ -1,11 +1,12 @@
-# Bekräfta [![Build Status](https://travis-ci.org/Milad/bekrafta.svg?branch=master)](https://travis-ci.org/Milad/bekrafta)
-[Bekräfta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): A PHP library to perform common operations on personal numbers, like: Validation, censoring the individual digits, calculating age and detecting gender.
+# Bekr&#228;fta [![Build Status](https://travis-ci.org/Milad/bekrafta.svg?branch=master)](https://travis-ci.org/Milad/bekrafta)
+[Bekr&#228;fta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): A PHP library to perform common operations on personal numbers, like: Validation, censoring the individual digits, calculating age and detecting gender.
 
 ### Supported Countries
-- Denmark
-- Finland
-- Norway
-- Sweden
+- Denmark (CPR-Nummer)
+- Finland (Henkil&#246;tunnus, Personbeteckning)
+- Poland (PESEL)
+- Norway (F&#248;dselsnummer)
+- Sweden (Personnummer)
 
 ### Supported PHP Versions
 - PHP 7.0

@@ -40,6 +40,11 @@ class PersonalNumberTest extends TestCase {
         $this->assertTrue((new PersonalNumber('150517-3712'))->detect());
         $this->assertTrue((new PersonalNumber('120917-3804'))->detect());
         $this->assertTrue((new PersonalNumber('211062-5629'))->detect());
+
+        $this->assertTrue((new PersonalNumber('44051401359'))->detect());
+        $this->assertTrue((new PersonalNumber('31020908809'))->detect());
+        $this->assertTrue((new PersonalNumber('35020691714'))->detect());
+        $this->assertTrue((new PersonalNumber('54111019473'))->detect());
     }
 
     public function testGetCensored() {
@@ -51,6 +56,9 @@ class PersonalNumberTest extends TestCase {
 
         $obj = new PersonalNumber('22071799674');
         $this->assertEquals('220717*****', $obj->getCensored());
+
+        $obj = new PersonalNumber('04020506179');
+        $this->assertEquals('040205*****', $obj->getCensored());
 
         $obj = new PersonalNumber('877898-8797');
         $this->expectException(Exception::class);
@@ -66,6 +74,10 @@ class PersonalNumberTest extends TestCase {
         $this->assertEquals(8, $obj->getAge($today));
         $obj = new PersonalNumber('280731-743N');
         $this->assertEquals(85, $obj->getAge($today));
+        $obj = new PersonalNumber('04020506179');
+        $this->assertEquals(113, $obj->getAge($today));
+        $obj = new PersonalNumber('86091447412');
+        $this->assertEquals(30, $obj->getAge($today));
 
         $obj = new PersonalNumber('877898-8797');
         $this->expectException(Exception::class);
@@ -134,6 +146,12 @@ class PersonalNumberTest extends TestCase {
         $this->assertEquals('m', $obj->getGender());
 
         $obj = new PersonalNumber('19111228+7568');
+        $this->assertEquals('f', $obj->getGender());
+
+        $obj = new PersonalNumber('45260298217');
+        $this->assertEquals('m', $obj->getGender());
+
+        $obj = new PersonalNumber('92012919764');
         $this->assertEquals('f', $obj->getGender());
 
         $obj = new PersonalNumber('877898-8797');

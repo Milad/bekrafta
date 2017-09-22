@@ -9,19 +9,21 @@
 namespace Bekrafta;
 
 class Finland extends BekraftaAbstract {
+    protected $genderElement = 'individualNumber';
+
     /**
      * Finland constructor.
      * @param string $personalNo
      */
     public function __construct(string $personalNo) {
-        $this->format = '#';
+        $this->format = '#^';
         $this->format .= '(?P<day>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
         $this->format .= '(?P<year>[0-9]{2})';
         $this->format .= '(?P<centurySign>[\-+A])';
         $this->format .= '(?P<individualNumber>[0-9]{3})';
         $this->format .= '(?P<checksum>[0-9A-Y])';
-        $this->format .= '#i';
+        $this->format .= '$#i';
 
         parent::__construct($personalNo);
     }
@@ -56,7 +58,7 @@ class Finland extends BekraftaAbstract {
 
         $remainder = $num % 31;
 
-        if ($controlCharacter[$remainder] == strtoupper($this->elements['checksum'])) {
+        if ($controlCharacter[$remainder] === strtoupper($this->elements['checksum'])) {
             return true;
         }
 
@@ -69,15 +71,5 @@ class Finland extends BekraftaAbstract {
             $this->elements['year'] .
             $this->elements['centurySign'] .
             '****';
-    }
-
-    public function getGender(): string {
-        $identifier = intval($this->elements['individualNumber']);
-
-        if (($identifier % 2) == 0) {
-            return 'f';
-        }
-
-        return 'm';
     }
 }

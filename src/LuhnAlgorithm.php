@@ -70,7 +70,7 @@ class LuhnAlgorithm {
 
         // If the total modulo 10 is equal to 0
         // then the number is valid according to the Luhn formula
-        return $this->luhnChecksum($number) == 0;
+        return $this->luhnChecksum($number) === 0;
     }
 
     /**
@@ -81,6 +81,6 @@ class LuhnAlgorithm {
      */
     public function calculateLuhn(string $partialNumber): int {
         $checkDigit = $this->luhnChecksum(intval($partialNumber) * 10);
-        return $checkDigit == 0 ? $checkDigit : 10 - $checkDigit;
+        return $checkDigit === 0 ? $checkDigit : 10 - $checkDigit;
     }
 }

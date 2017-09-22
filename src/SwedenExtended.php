@@ -9,6 +9,8 @@
 namespace Bekrafta;
 
 class SwedenExtended extends Sweden {
+    protected $genderElement = 'identifier';
+
     /**
      * SwedenExtended constructor.
      * @param string $personalNo
@@ -16,7 +18,7 @@ class SwedenExtended extends Sweden {
     public function __construct(string $personalNo) {
         parent::__construct($personalNo);
 
-        $this->format = '#';
+        $this->format = '#^';
         $this->format .= '(?P<century>18|19|20)?';
         $this->format .= '(?P<year>[0-9]{2})';
         $this->format .= '(?P<month>[0-9]{2})';
@@ -24,7 +26,7 @@ class SwedenExtended extends Sweden {
         $this->format .= '(?P<separator>[\-+])?';
         $this->format .= '(?P<identifier>[0-9]{3})';
         $this->format .= '(?P<checksum>[0-9]{1})';
-        $this->format .= '#';
+        $this->format .= '$#';
 
         $this->personalNo = trim($personalNo);
         $this->validateFormat();
@@ -46,16 +48,6 @@ class SwedenExtended extends Sweden {
             $this->elements['day'] .
             $this->elements['separator'] .
             '****';
-    }
-
-    public function getGender(): string {
-        $identifier = intval($this->elements['identifier']);
-
-        if (($identifier % 2) == 0) {
-            return 'f';
-        }
-
-        return 'm';
     }
 
     /**

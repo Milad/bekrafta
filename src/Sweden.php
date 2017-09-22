@@ -11,6 +11,8 @@ namespace Bekrafta;
 use DateTime;
 
 class Sweden extends BekraftaAbstract {
+    protected $genderElement = 'identifier';
+
     /**
      * Sweden constructor.
      * @param string $personalNo
@@ -47,9 +49,19 @@ class Sweden extends BekraftaAbstract {
     }
 
     protected function validateDate(): bool {
-        return checkdate($this->elements['month'], $this->elements['day'], '19' . $this->elements['year']) or
-            checkdate($this->elements['month'], $this->elements['day'], '18' . $this->elements['year']) or
-            checkdate($this->elements['month'], $this->elements['day'], '20' . $this->elements['year']);
+        return checkdate(
+            (int) $this->elements['month'],
+            (int) $this->elements['day'],
+            (int) '19' . $this->elements['year']
+        ) or checkdate(
+            (int) $this->elements['month'],
+            (int) $this->elements['day'],
+            (int) '18' . $this->elements['year']
+        ) or checkdate(
+            (int) $this->elements['month'],
+            (int) $this->elements['day'],
+            (int) '20' . $this->elements['year']
+        );
     }
 
     protected function validateChecksum(): bool {
@@ -64,15 +76,5 @@ class Sweden extends BekraftaAbstract {
             $this->elements['day'] .
             $this->elements['separator'] .
             '****';
-    }
-
-    public function getGender(): string {
-        $identifier = intval($this->elements['identifier']);
-
-        if (($identifier % 2) == 0) {
-            return 'f';
-        }
-
-        return 'm';
     }
 }
