@@ -1,5 +1,5 @@
 # Bekr&#228;fta [![Build Status](https://travis-ci.org/Milad/bekrafta.svg?branch=master)](https://travis-ci.org/Milad/bekrafta)
-[Bekr&#228;fta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): A PHP library to perform common operations on personal numbers, like: Validation, censoring the individual digits, calculating age and detecting gender.
+[Bekr&#228;fta](https://en.wiktionary.org/wiki/bekr%C3%A4fta#Swedish): A PHP library to perform common operations on Personal Identification Numbers, like: Validation, censoring the individual digits, calculating age and detecting gender.
 
 ### Supported Countries
 - Denmark (CPR-Nummer)
@@ -69,10 +69,17 @@ $oSweden->getYear();
 $oSweden->getBirthday();
 ```
 
-# Sweden Extended
+### Sweden Extended
 In Sweden, some companies add the century digits as a part of the personal number, or remove the symbol between the date of birth and the four other digits. These changes are not part of the standard of the official standard. So I included to classes for Sweden:
 - Sweden: Supports the official standard format.
 - SwedenExtended: Supports the popular non-standard formats.
+
+### Denmark Strict
+> However, in 2007 the available sequence numbers under this system for males born on 1 January 1965 ran out, and since October 2007 personal identification numbers do not always validate using the check digit. This had been predicted and announced several years in advance. Thus, most IT systems are presumed updated to accept numbers that fail the check-digit validation.
+
+&mdash; [Wikipedia](https://en.wikipedia.org/wiki/Personal_identification_number_(Denmark))
+
+Therefore, I see no use for performing a checksum on Danish personal numbers, because we will get false negatives. However, if you want to use the checksum, you can use the class DenmarkStrict which performs the checksum on the personal number, you will get false positives though.
 
 ### License
 MIT

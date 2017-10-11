@@ -59,21 +59,6 @@ class Norway extends BekraftaAbstract {
         return true;
     }
 
-    /**
-     * Validets a checksum in the personal number.
-     * @param array $numbers
-     * @return bool
-     */
-    protected function validateBitCheckSum(array $numbers) {
-        $sum = 0;
-
-        foreach ($numbers as $index => $number) {
-            $sum += ($number * intval($this->personalNo[$index]));
-        }
-
-        return $sum % 11 === 0;
-    }
-
     public function getCensored(): string {
         return $this->elements['day'] . $this->elements['month'] . $this->elements['year'] . '*****';
     }

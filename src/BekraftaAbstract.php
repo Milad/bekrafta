@@ -141,4 +141,21 @@ abstract class BekraftaAbstract {
 
         return 'm';
     }
+
+    /**
+     * Validates a checksum in the personal number.
+     * @param array $numbers Checksum digits
+     * @param int $mod The modulus divider.
+     * @return bool
+     */
+    protected function validateBitCheckSum(array $numbers, int $mod = 11) {
+        $personalNoCleaned = preg_replace('/[^0-9]/', '', $this->personalNo);
+        $sum = 0;
+
+        foreach ($numbers as $index => $number) {
+            $sum += ($number * intval($personalNoCleaned[$index]));
+        }
+
+        return $sum % $mod === 0;
+    }
 }
