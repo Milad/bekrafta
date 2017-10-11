@@ -9,6 +9,8 @@
 - Norway (F&#248;dselsnummer)
 - Sweden (Personnummer)
 
+![Supported Countries](./chart.jpg)
+
 ### Supported PHP Versions
 - PHP 7.0
 - PHP 7.1
