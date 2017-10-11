@@ -80,8 +80,7 @@ In Sweden, some companies add the century digits as a part of the personal numbe
 
 ### Denmark Strict
 > However, in 2007 the available sequence numbers under this system for males born on 1 January 1965 ran out, and since October 2007 personal identification numbers do not always validate using the check digit. This had been predicted and announced several years in advance. Thus, most IT systems are presumed updated to accept numbers that fail the check-digit validation.
-
-&mdash; [Wikipedia](https://en.wikipedia.org/wiki/Personal_identification_number_(Denmark))
+> &mdash; [Wikipedia](https://en.wikipedia.org/wiki/Personal_identification_number_(Denmark))
 
 Therefore, I see no use for performing a checksum on Danish personal numbers, because we will get false negatives. However, if you want to use the checksum, you can use the class DenmarkStrict which performs the checksum on the personal number, you will get false positives though.
 
