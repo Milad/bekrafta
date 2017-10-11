@@ -22,6 +22,11 @@ class PersonalNumber {
      */
     protected $bekrafta;
 
+    /**
+     * @var string
+     */
+    protected $exceptionMessage = "No format was detected.";
+
     public function __construct(string $personalNo) {
         $this->personalNo = $personalNo;
     }
@@ -46,10 +51,22 @@ class PersonalNumber {
         }
 
         if ($this->bekrafta === null) {
-            throw new Exception("No format was detected.");
+            throw new Exception($this->exceptionMessage);
         }
 
         return $this->bekrafta->getCensored();
+    }
+
+    public function getBirthday(): string {
+        if ($this->bekrafta === null) {
+            $this->detect();
+        }
+
+        if ($this->bekrafta === null) {
+            throw new Exception($this->exceptionMessage);
+        }
+
+        return $this->bekrafta->getBirthday();
     }
 
     public function getAge(string $today = 'today'): int {
@@ -58,7 +75,7 @@ class PersonalNumber {
         }
 
         if ($this->bekrafta === null) {
-            throw new Exception("No format was detected.");
+            throw new Exception($this->exceptionMessage);
         }
 
         return $this->bekrafta->getAge($today);
@@ -70,7 +87,7 @@ class PersonalNumber {
         }
 
         if ($this->bekrafta === null) {
-            throw new Exception("No format was detected.");
+            throw new Exception($this->exceptionMessage);
         }
 
         return $this->bekrafta->getGender();
@@ -82,7 +99,7 @@ class PersonalNumber {
         }
 
         if ($this->bekrafta === null) {
-            throw new Exception("No format was detected.");
+            throw new Exception($this->exceptionMessage);
         }
 
         return $this->bekrafta->getYear();
