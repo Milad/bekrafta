@@ -5,6 +5,7 @@
 - Denmark (CPR-Nummer)
 - Finland (Henkil&#246;tunnus, Personbeteckning)
 - Poland (PESEL)
+- Netherlands (Burgerservicenummer) *Validation only*
 - Norway (F&#248;dselsnummer)
 - Sweden (Personnummer)
 
@@ -41,6 +42,9 @@ $oPN->getGender();
 
 // 1981
 $oPM->getYear();
+
+// 1981-12-28
+$oPM->getBirthday()
 ```
 
 Or you can use a specific country if you only need that.
