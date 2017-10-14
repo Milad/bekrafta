@@ -158,4 +158,13 @@ abstract class BekraftaAbstract {
 
         return $sum % $mod === 0;
     }
+
+    /**
+     * Returns personal number.
+     *
+     * @return string
+     */
+    public function getPN(): string {
+        return $this->personalNo;
+    }
 }

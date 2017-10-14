@@ -54,12 +54,13 @@ class SwedenExtendedTest extends TestCase {
     }
 
     public function testRemoveLeadingCenturies() {
-        $this->assertEquals('571124-1322', (new SwedenExtended('571124-1322'))->removeLeadingCenturies());
-        $this->assertEquals('571124-1322', (new SwedenExtended('19571124-1322'))->removeLeadingCenturies());
-        $this->assertEquals('571124-1322', (new SwedenExtended('18571124-1322'))->removeLeadingCenturies());
-        $this->assertEquals('5711241322', (new SwedenExtended('5711241322'))->removeLeadingCenturies());
-        $this->assertEquals('5711241322', (new SwedenExtended('195711241322'))->removeLeadingCenturies());
-        $this->assertEquals('5711241322', (new SwedenExtended('185711241322'))->removeLeadingCenturies());
+        $this->assertEquals('571124-1322', (new SwedenExtended('571124-1322'))->removeLeadingCenturies()->getPN());
+        $this->assertEquals('571124-1322', (new SwedenExtended('19571124-1322'))->removeLeadingCenturies()->getPN());
+        $this->assertEquals('571124-1322', (new SwedenExtended('18571124-1322'))->removeLeadingCenturies()->getPN());
+        $this->assertEquals('5711241322', (new SwedenExtended('5711241322'))->removeLeadingCenturies()->getPN());
+        $this->assertEquals('5711241322', (new SwedenExtended('195711241322'))->removeLeadingCenturies()->getPN());
+        $this->assertEquals('5711241322', (new SwedenExtended('185711241322'))->removeLeadingCenturies()->getPN());
+        $this->assertEquals('', (new SwedenExtended(''))->removeLeadingCenturies()->getPN());
     }
 
     public function testGetGender() {
@@ -96,5 +97,15 @@ class SwedenExtendedTest extends TestCase {
 
         $this->assertEquals('19111228+****', (new SwedenExtended('19111228+7568'))->getCensored());
         $this->assertEquals('20160718-****', (new SwedenExtended('20160718-7562'))->getCensored());
+    }
+
+    public function testRemoveNonNumbers() {
+        $this->assertEquals('6504280196', (new SwedenExtended('650428-0196'))->removeNonNumbers()->getPN());
+        $this->assertEquals('4703042657', (new SwedenExtended('470304-2657'))->removeNonNumbers()->getPN());
+        $this->assertEquals('8112289874', (new SwedenExtended('811228-9874'))->removeNonNumbers()->getPN());
+        $this->assertEquals('1112287568', (new SwedenExtended('111228+7568'))->removeNonNumbers()->getPN());
+        $this->assertEquals('1112287568', (new SwedenExtended('111228-7568'))->removeNonNumbers()->getPN());
+        $this->assertEquals('1607187562', (new SwedenExtended('160718-7562'))->removeNonNumbers()->getPN());
+        $this->assertEquals('1607187562', (new SwedenExtended('160718+7562'))->removeNonNumbers()->getPN());
     }
 }

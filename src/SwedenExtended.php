@@ -37,7 +37,7 @@ class SwedenExtended extends Sweden {
     }
 
     protected function validateChecksum(): bool {
-        $this->personalNo = $this->removeLeadingCenturies();
+        $this->personalNo = $this->removeLeadingCenturies()->getPN();
         return parent::validateChecksum();
     }
 
@@ -53,18 +53,26 @@ class SwedenExtended extends Sweden {
     /**
      * Removes the leading century digits because they are not
      * used to calculate the checksum
-     * @return string
+     * @return SwedenExtended
      */
-    public function removeLeadingCenturies(): string {
-        if (empty($this->personalNo)) {
-            return $this->personalNo;
-        }
-
-        return $this->elements['year'] .
+    public function removeLeadingCenturies(): SwedenExtended {
+        $personalNo = $this->elements['year'] .
             $this->elements['month'] .
             $this->elements['day'] .
             $this->elements['separator'] .
             $this->elements['identifier'] .
             $this->elements['checksum'];
+
+        return new SwedenExtended($personalNo);
+    }
+
+    /**
+     * Removes non-number characters from personal numbers.
+     *
+     * @return SwedenExtended
+     */
+    public function removeNonNumbers(): SwedenExtended {
+        $personalNo = preg_replace('/[^0-9]/', '', $this->personalNo);
+        return new SwedenExtended($personalNo);
     }
 }

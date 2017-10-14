@@ -78,7 +78,9 @@ $oSweden->getBirthday();
 ### Sweden Extended
 In Sweden, some companies add the century digits as a part of the personal number, or remove the symbol between the date of birth and the four other digits. These changes are not part of the standard of the official standard. So I included to classes for Sweden:
 - Sweden: Supports the official standard format.
-- SwedenExtended: Supports the popular non-standard formats.
+- SwedenExtended: Supports the popular non-standard formats. This has two more functions:
+    - removeLeadingCenturies() it removes the leading 19 or 20 from the personal number.
+    - removeNonNumbers() Removes non-numeric characters form personal number.
 
 ### Denmark Strict
 > However, in 2007 the available sequence numbers under this system for males born on 1 January 1965 ran out, and since October 2007 personal identification numbers do not always validate using the check digit. This had been predicted and announced several years in advance. Thus, most IT systems are presumed updated to accept numbers that fail the check-digit validation.
