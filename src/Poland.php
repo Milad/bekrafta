@@ -49,17 +49,7 @@ class Poland extends BekraftaAbstract {
     protected function getMonth(): string {
         $month = intval($this->elements['month']);
 
-        $newMonth = $month;
-
-        if ($month < 20) {
-            $newMonth = $month;
-        } elseif ($month > 20 && $month < 33) {
-            $newMonth = $month - 20;
-        } elseif ($month > 40 && $month < 53) {
-            $newMonth = $month - 40;
-        } elseif ($month > 60 && $month < 73) {
-            $newMonth = $month - 60;
-        }
+        $newMonth = $month % 20;
 
         return sprintf('%02d', $newMonth);
     }
@@ -101,5 +91,9 @@ class Poland extends BekraftaAbstract {
             $this->elements['month'] .
             $this->elements['day'] .
             '*****';
+    }
+
+    protected function validateSaneValues(): bool {
+        return $this->elements['month'] % 20 <= 12 && $this->elements['day'] <= 31;
     }
 }

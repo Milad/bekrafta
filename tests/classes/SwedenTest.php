@@ -65,6 +65,11 @@ class SwedenTest extends TestCase {
         $this->assertEquals(5, (new Sweden('111228-7568'))->getAge($today));
         $this->assertEquals(1, (new Sweden('160718-7562'))->getAge($today));
         $this->assertEquals(101, (new Sweden('160718+7562'))->getAge($today));
+
+        // This previously caused PHP error
+        // Uncaught Exception: DateTime::__construct(): Failed to parse time string (2076-06-83) at position 9 (3)
+        // Unexpected character in vendor/miladk/bekrafta/src/Sweden.php:40
+        $this->assertEquals(0, (new Sweden('760683-5572'))->getAge($today));
     }
 
     public function testGetGender() {

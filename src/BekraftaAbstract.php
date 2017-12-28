@@ -48,6 +48,7 @@ abstract class BekraftaAbstract {
         return (
             !empty($this->personalNo) &&
             $this->validateFormat() &&
+            $this->validateSaneValues() &&
             $this->validateDate() &&
             $this->validateChecksum()
         );
@@ -95,6 +96,9 @@ abstract class BekraftaAbstract {
      * @return string
      */
     public function getBirthday(): string {
+        if (!$this->validateSaneValues()) {
+            return '';
+        }
         return $this->getYear() . '-' . $this->elements['month'] . '-' . $this->elements['day'];
     }
 
@@ -166,5 +170,13 @@ abstract class BekraftaAbstract {
      */
     public function getPN(): string {
         return $this->personalNo;
+    }
+
+    /**
+     * Validates Month and Day integers to be within sane limits.
+     * @return bool
+     */
+    protected function validateSaneValues(): bool {
+        return $this->elements['month'] <= 12 && $this->elements['day'] <= 31;
     }
 }

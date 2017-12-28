@@ -54,4 +54,9 @@ class Netherlands extends BekraftaAbstract {
     public function getGender(): string {
         return '';
     }
+
+    protected function validateSaneValues(): bool {
+        // It doesn't matter in the Netherlands
+        return true;
+    }
 }
